@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="az">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<meta name="theme-color" content="#F6F2EA">
+<title>Piano çalan qız — Rafaelli</title>
+<link rel="icon" type="image/svg+xml" href="../favicon.svg">
+<link rel="stylesheet" href="../style.css">
+
+<link rel="alternate" hreflang="az" href="../eser/piano-calan-qiz.html">
+<link rel="alternate" hreflang="en" href="../en/eser/piano-calan-qiz.html">
+
+
+<meta property="og:title" content="Piano çalan qız">
+
+
+</head>
+<body>
+<header class="site-header">
+  <div class="container header-inner">
+    <a href="../index.html" class="logo" aria-label="Rafaelli">
+      <span class="wordmark"><span>R</span><span>A</span><span>F</span><span>A</span><span>E</span><span class="wm-corner wm-c1" aria-hidden="true"></span><span class="wm-corner wm-c2" aria-hidden="true"></span><span>I</span><span class="visually-hidden">Rafaelli</span></span>
+    </a>
+    <nav class="main-nav">
+      <a href="../index.html">Ana səhifə</a>
+      <a href="../kolleksiya.html">Kolleksiya</a>
+      <a href="../index.html#haqqimizda">Haqqımızda</a>
+      <a href="../index.html#elaqe">Əlaqə</a>
+      <span class="lang-switch" role="group" aria-label="Dil">
+        <a href="../eser/piano-calan-qiz.html" hreflang="az" lang="az" aria-current="true" class="active">AZ</a>
+        <span aria-hidden="true">|</span>
+        <a href="../en/eser/piano-calan-qiz.html" hreflang="en" lang="en" >EN</a>
+      </span>
+    </nav>
+  </div>
+</header>
+
+<main>
+
+
+
+<section class="container artwork-detail">
+  
+
+  <a href="../kolleksiya.html" class="back-link">← Kolleksiya</a>
+
+  
+  <div class="detail-stack">
+    <div class="showcase showcase-two">
+      <figure class="detail-figure">
+        <img id="main-image" src="../img/melodiya-framed.jpg" alt="Piano çalan qız — Çərçivədə">
+        <span class="badge badge-sold">Satılıb</span>
+        <figcaption>Çərçivədə</figcaption>
+      </figure>
+      
+      <figure class="detail-figure detail-room">
+        <img src="../img/melodiya-interior_bare.jpg" alt="Piano çalan qız — İnteryerdə" loading="lazy">
+        <figcaption>İnteryerdə</figcaption>
+      </figure>
+      
+    </div>
+    
+    <div class="thumb-row" aria-label="Görünüşlər">
+      <button type="button" class="thumb-btn active" data-src="../img/melodiya-framed.jpg">
+        <img src="../img/melodiya-framed.jpg" alt="Çərçivədə" loading="lazy"><span>Çərçivədə</span>
+      </button>
+      <button type="button" class="thumb-btn" data-src="../img/melodiya-bare.jpg">
+        <img src="../img/melodiya-bare.jpg" alt="Orijinal" loading="lazy"><span>Orijinal</span>
+      </button>
+    </div>
+    
+    <p class="fine-print">Çərçivə və interyer görüntüləri təqdimat məqsədlidir; əsər kətan üzərində təqdim olunur.</p>
+
+    <div class="detail-info">
+      <h1>Piano çalan qız</h1>
+      
+
+      <dl class="spec-grid">
+        <div><dt>Texnika</dt><dd>Kətan üzərində yağlı boya</dd></div>
+        
+        
+        
+        
+        <div><dt>Qiymət</dt><dd>
+          Satılıb
+          
+        </dd></div>
+      </dl>
+
+      
+        <p class="sold-note">Bu əsər artıq satılıb.</p>
+      
+
+      
+      <div class="story-block">
+        <h2>Əsərin hekayəsi</h2>
+        <p class="story-text">Zal boşdur — yalnız o və piano. Barmaqlar klavişlərə toxunanda gecənin rəngləri arxada alovlanır: bənövşəyi, mavi, qırmızı. Bu, səsin rəngə çevrildiyi andır.</p>
+      </div>
+      
+    </div>
+
+    
+    <div class="story-video">
+      <video id="story-video" preload="none" playsinline
+             poster="../img/melodiya-cover.jpg">
+        <source src="../img/melodiya-hekaye.mp4" type="video/mp4">
+      </video>
+      <button type="button" id="video-play-btn" class="video-play-btn" aria-label="Videonu oynat">▶</button>
+      <p class="fine-print">Bu, süni intellektlə hazırlanmış bədii canlandırmadır.</p>
+    </div>
+    
+  </div>
+</section>
+
+
+
+<script>
+document.querySelectorAll('.thumb-btn').forEach(btn => {
+  btn.addEventListener('click', () => {
+    document.getElementById('main-image').src = btn.dataset.src;
+    document.querySelectorAll('.thumb-btn').forEach(b => b.classList.remove('active'));
+    btn.classList.add('active');
+  });
+});
+
+const video = document.getElementById('story-video');
+const playBtn = document.getElementById('video-play-btn');
+if (video && playBtn) {
+  playBtn.addEventListener('click', () => {
+    if (video.paused) { video.play(); playBtn.classList.add('hidden'); }
+    else { video.pause(); playBtn.classList.remove('hidden'); }
+  });
+  video.addEventListener('click', () => {
+    if (!video.paused) { video.pause(); playBtn.classList.remove('hidden'); }
+  });
+  video.addEventListener('ended', () => playBtn.classList.remove('hidden'));
+}
+</script>
+
+
+</main>
+
+<footer class="site-footer">
+  <div class="container footer-inner">
+    <span class="footer-logo" aria-hidden="true"><span class="wordmark"><span>R</span><span>A</span><span>F</span><span>A</span><span>E</span><span class="wm-corner wm-c1" aria-hidden="true"></span><span class="wm-corner wm-c2" aria-hidden="true"></span><span>I</span><span class="visually-hidden">Rafaelli</span></span></span>
+    <p>&copy; 2026 Rafaelli — Orijinal sənət əsərləri</p>
+    
+  </div>
+</footer>
+<script>(function(){var t="ODk4MTU3MjA1NDk5",m={"kitab-oxuyan-qiz": {"title": "Kitab oxuyan qız", "title_en": "Girl Reading a Book", "price": null, "status": "for_sale"}, "geride-qalan-xatire": {"title": "Geridə qalan xatirə", "title_en": "A Memory Left Behind", "price": null, "status": "for_sale"}, "qelebe": {"title": "Qələbə", "title_en": "Victory", "price": null, "status": "for_sale"}, "dalgalarin-zerif-toxunusu": {"title": "Dalğaların zərif toxunuşu", "title_en": "The Gentle Touch of the Waves", "price": null, "status": "for_sale"}, "zeriflik": {"title": "Zəriflik", "title_en": "Grace", "price": null, "status": "for_sale"}, "yeni-gun": {"title": "Yeni gün", "title_en": "A New Day", "price": null, "status": "for_sale"}, "aktrisa": {"title": "Aktrisa", "title_en": "The Actress", "price": null, "status": "for_sale"}, "gozlenti": {"title": "Gözlənti", "title_en": "Anticipation", "price": null, "status": "for_sale"}, "boyuk-gozlentiler": {"title": "Böyük gözləntilər", "title_en": "Great Expectations", "price": null, "status": "for_sale"}, "gunesli-gun": {"title": "Günəşli gün", "title_en": "A Sunny Day", "price": null, "status": "for_sale"}, "dalgalar": {"title": "Dalğalar", "title_en": "Waves", "price": null, "status": "for_sale"}, "tenha-qayiq": {"title": "Tənha qayıq", "title_en": "The Lonely Boat", "price": null, "status": "for_sale"}, "afurca-yolu": {"title": "Afurca yolu", "title_en": "The Road to Afurja", "price": null, "status": "for_sale"}, "piano-calan-qiz": {"title": "Piano çalan qız", "title_en": "Girl Playing the Piano", "price": null, "status": "sold"}, "yagmurlu-bir-gun": {"title": "Yağmurlu bir gün", "title_en": "A Rainy Day", "price": null, "status": "sold"}, "penalopa": {"title": "Penalopa", "title_en": "Penelope", "price": null, "status": "sold"}};function n(){try{return atob(t).split('').reverse().join('')}catch(e){return''}}document.querySelectorAll('[data-wa]').forEach(function(a){a.setAttribute('target','_blank');a.setAttribute('rel','noopener nofollow');a.addEventListener('click',function(){var s=a.getAttribute('data-wa'),i=m[s],msg,en=document.documentElement.lang==='en',ti=i?(en?i.title_en:i.title):'';if(!s){msg=en?'Hello! I\'m interested in the Rafaelli collection.':'Salam! Rafaelli kolleksiyası ilə maraqlanıram.'}else if(i&&i.price){msg=en?'Hello! I\'m interested in the work "'+ti+'". '+location.href:'Salam! "'+ti+'" adlı əsərlə maraqlanıram. '+location.href}else{msg=en?'Hello! I would like to know the price and details of the work "'+ti+'". '+location.href:'Salam! "'+ti+'" adlı əsərin qiyməti və ətraflı məlumat barədə maraqlanıram. '+location.href}a.href='https://wa.me/'+n()+'?text='+encodeURIComponent(msg);});});})();</script></body>
+</html>
