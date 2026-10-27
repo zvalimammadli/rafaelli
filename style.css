@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@500;600;700&family=Jost:wght@400;500&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@500;600;700&family=Jost:wght@300;400;500&display=swap');
 
 :root {
   --cream: #F7F2EA;
@@ -493,3 +493,35 @@ img { max-width: 100%; }
   input, select, textarea { font-size: 16px !important; }
 }
 @media (max-width: 640px) { .form-row label { flex: 0 0 auto; } }
+
+/* ================= Brand wordmark (RAFAELLI — the two L's form frame corners) ================= */
+.logo { display: inline-flex; align-items: center; text-decoration: none; }
+.wordmark {
+  display: inline-flex; align-items: flex-end;
+  font-family: 'Jost', 'Futura', 'Century Gothic', sans-serif;
+  font-weight: 300; font-size: 1.55rem; line-height: 1; letter-spacing: 0;
+  color: var(--ink);
+}
+.wordmark > span { margin-right: 0.3em; }
+.wordmark > span:last-child { margin-right: 0; }
+.wordmark .wm-l { color: var(--gold); font-weight: 400; }
+.wordmark .wm-l:not(.wm-l2) { margin-right: 0.11em; }
+.wordmark .wm-l2 { display: inline-block; transform: rotate(180deg); }
+.logo:hover .wordmark { color: var(--ink); }
+.footer-inner { display: flex; flex-direction: column; align-items: center; gap: 10px; }
+.footer-logo .wordmark { font-size: 1.05rem; color: var(--ink-soft); }
+/* language switch */
+.lang-switch { display: inline-flex; align-items: center; gap: 6px; margin-left: 8px; font-size: 0.85rem; letter-spacing: 0.08em; color: var(--ink-soft); }
+.lang-switch a { color: var(--ink-soft); padding: 4px 2px; }
+.lang-switch a.active { color: var(--ink); font-weight: 500; border-bottom: 1px solid var(--gold); }
+@media (max-width: 640px) {
+  .wordmark { font-size: 1.3rem; }
+  .lang-switch { margin-left: 0; }
+}
+/* frame-corner L's drawn exactly (cap-height boxes on the baseline) */
+.wordmark { align-items: baseline; }
+.wordmark > span.wm-corner { display: inline-block; width: 0.44em; height: 0.7em; box-sizing: border-box; border: 0 solid var(--gold); margin-right: 0.12em; }
+.wordmark > span.wm-c1 { border-left-width: 0.085em; border-bottom-width: 0.085em; }
+.wordmark > span.wm-c2 { border-top-width: 0.085em; border-right-width: 0.085em; margin-right: 0.3em; }
+.visually-hidden { position: absolute !important; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
+.wordmark > span.visually-hidden { margin: 0; }
