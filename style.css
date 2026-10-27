@@ -525,3 +525,32 @@ img { max-width: 100%; }
 .wordmark > span.wm-c2 { border-top-width: 0.085em; border-right-width: 0.085em; margin-right: 0.3em; }
 .visually-hidden { position: absolute !important; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
 .wordmark > span.visually-hidden { margin: 0; }
+
+/* ---------- Loupe & full-screen viewer ---------- */
+.zoom-lens {
+  position: absolute; width: 190px; height: 190px; border-radius: 50%;
+  border: 3px solid #fff; box-shadow: 0 6px 24px rgba(0,0,0,.35), 0 0 0 1px var(--gold-soft);
+  background-repeat: no-repeat; background-color: #fff;
+  pointer-events: none; opacity: 0; transition: opacity .15s ease; z-index: 5;
+}
+.zoom-lens.on { opacity: 1; }
+#main-image { cursor: zoom-in; }
+.zoom-bar { display: flex; flex-direction: column; align-items: center; gap: 6px; }
+.zoom-open { display: inline-flex; align-items: center; gap: 8px; }
+.zoom-hint { margin: 0; text-align: center; }
+@media (hover: none), (pointer: coarse) { .zoom-hint { display: none; } #main-image { cursor: default; } }
+
+.zoom-viewer { position: fixed; inset: 0; z-index: 1000; background: #0d0c0b; color: #f3eee6; }
+.zoom-viewer[hidden] { display: none; }
+.zv-stage { position: absolute; inset: 0; overflow: hidden; touch-action: none; cursor: grab; }
+.zv-stage:active { cursor: grabbing; }
+.zv-stage img { position: absolute; left: 50%; top: 50%; max-width: none; transform-origin: center center; user-select: none; -webkit-user-select: none; will-change: transform; }
+.zv-top { position: absolute; top: 0; left: 0; right: 0; display: flex; justify-content: space-between; align-items: center;
+  padding: 12px 16px; background: linear-gradient(rgba(0,0,0,.6), transparent); pointer-events: none; }
+.zv-title { font-family: 'Playfair Display', Georgia, serif; font-size: 1.05rem; }
+.zv-top .zv-btn { pointer-events: auto; }
+.zv-btn { width: 44px; height: 44px; border-radius: 50%; border: 1px solid rgba(255,255,255,.35); background: rgba(20,20,20,.65);
+  color: #fff; font-size: 1.3rem; line-height: 1; cursor: pointer; }
+.zv-btn:hover { border-color: var(--gold-soft); color: var(--gold-soft); }
+.zv-controls { position: absolute; right: 16px; bottom: 56px; display: flex; flex-direction: column; gap: 10px; }
+.zv-help { position: absolute; left: 0; right: 0; bottom: 14px; margin: 0; text-align: center; font-size: .8rem; color: rgba(243,238,230,.7); padding: 0 16px; }
