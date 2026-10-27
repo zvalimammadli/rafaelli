@@ -221,7 +221,11 @@
       })
     }).then(function (r) { return r.json().then(function (j) { if (!r.ok || String(j.success) !== 'true') throw j; }); })
       .then(function () { f.reset(); st.textContent = T.ok; st.classList.add('ok'); })
-      .catch(function () { st.textContent = T.err; st.classList.add('err'); })
+      .catch(function (j) {
+        var m = (j && j.message) ? String(j.message) : '';
+        st.textContent = /activat/i.test(m) ? 'Forma hələ aktivləşdirilməyib: e-poçt qutusuna “Activate Form” məktubu göndərildi. / The form needs activation — check the inbox for the “Activate Form” email.' : T.err + (m ? ' (' + m + ')' : '');
+        st.classList.add('err');
+      })
       .finally(function () { btn.disabled = false; btn.textContent = T.send; });
   });
 })();
