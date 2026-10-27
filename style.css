@@ -584,3 +584,10 @@ img { max-width: 100%; }
 .sold-label { color: var(--sold); font-weight: 700; text-transform: uppercase; letter-spacing: .06em; margin: 0; font-size: .95rem; }
 .sold-note { color: var(--sold); font-weight: 600; }
 @media (max-width: 600px) { .badge-sold { font-size: .7rem; padding: 4px 8px; } }
+
+/* ---------- "Özəl kolleksiyada" ---------- */
+.badge-private { background: var(--ink); color: #f3e6c8; font-weight: 600; font-size: .75rem; letter-spacing: .06em; padding: 6px 12px;
+  border: 1px solid var(--gold-soft); }
+.private-label { color: var(--gold); font-weight: 600; font-style: italic; margin: 0; font-size: .95rem; }
+.private-note { color: var(--ink-soft); font-style: italic; }
+@media (max-width: 600px) { .badge-private { font-size: .66rem; padding: 4px 7px; } }
