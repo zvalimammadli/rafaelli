@@ -554,3 +554,22 @@ img { max-width: 100%; }
 .zv-btn:hover { border-color: var(--gold-soft); color: var(--gold-soft); }
 .zv-controls { position: absolute; right: 16px; bottom: 56px; display: flex; flex-direction: column; gap: 10px; }
 .zv-help { position: absolute; left: 0; right: 0; bottom: 14px; margin: 0; text-align: center; font-size: .8rem; color: rgba(243,238,230,.7); padding: 0 16px; }
+
+/* ---------- Theme filter ---------- */
+.theme-filter, .status-filter { display: flex; flex-wrap: wrap; gap: 8px; margin: 18px 0 0; }
+.status-filter { margin: 10px 0 8px; }
+.chip { display: inline-block; padding: 9px 16px; border: 1px solid var(--border); border-radius: 999px; background: #fff;
+  font-size: .92rem; color: var(--ink); line-height: 1.2; transition: border-color .15s, background .15s, color .15s; }
+.chip:hover { border-color: var(--gold); color: var(--ink); }
+.chip.active { background: var(--ink); border-color: var(--ink); color: #fff; }
+.chip-sm { padding: 5px 12px; font-size: .8rem; color: var(--ink-soft); }
+.chip-sm.active { background: var(--gold); border-color: var(--gold); color: #fff; }
+.theme-link { color: var(--gold); }
+.theme-link:hover { text-decoration: underline; }
+@media (max-width: 600px) {
+  .theme-filter { flex-wrap: nowrap; overflow-x: auto; padding-bottom: 4px; margin-right: -16px; scrollbar-width: none; }
+  .theme-filter::-webkit-scrollbar { display: none; }
+  .chip { flex: 0 0 auto; }
+}
+
+.artwork-card[hidden], .empty-state[hidden] { display: none !important; }

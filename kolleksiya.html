@@ -39,20 +39,29 @@
 <section class="container">
   <h1>Kolleksiya</h1>
 
-  <form class="filter-bar" method="get" action="kolleksiya.html">
-    <select name="status" aria-label="Status">
-      <option value="" selected>Bütün əsərlər</option>
-      <option value="for_sale" >Satışda</option>
-      <option value="sold" >Satılıb</option>
-    </select>
-    <input type="number" name="mov_qiymet" aria-label="Min. qiymət (AZN)" placeholder="Min. qiymət (AZN)" value="">
-    <input type="number" name="max_qiymet" aria-label="Maks. qiymət (AZN)" placeholder="Maks. qiymət (AZN)" value="">
-    <button type="submit" class="btn btn-secondary">Filtrlə</button>
-  </form>
+  
+  
+  <nav class="theme-filter" aria-label="Mövzu">
+    <a href="?" data-theme="" class="chip active">Bütün mövzular</a>
+    
+    <a href="?movzu=portret" data-theme="portret" class="chip ">Portret və obrazlar</a>
+    
+    <a href="?movzu=deniz" data-theme="deniz" class="chip ">Dəniz və su</a>
+    
+    <a href="?movzu=menzere" data-theme="menzere" class="chip ">Mənzərə</a>
+    
+    <a href="?movzu=heyvanlar" data-theme="heyvanlar" class="chip ">Heyvanlar</a>
+    
+  </nav>
+  <nav class="status-filter" aria-label="Status">
+    <a href="?" data-status="" class="chip chip-sm active">Hamısı</a>
+    <a href="?status=for_sale" data-status="for_sale" class="chip chip-sm ">Satışda</a>
+    <a href="?status=sold" data-status="sold" class="chip chip-sm ">Satılıb</a>
+  </nav>
 
   
   <div class="artwork-grid">
-    <a class="artwork-card" href="eser/kitab-oxuyan-qiz.html">
+    <a class="artwork-card" href="eser/kitab-oxuyan-qiz.html" data-themes="portret,deniz" data-status="for_sale">
   
     <img src="img/fa6f3f0796224fa39f010ec9b756e0bd.jpg" alt="Kitab oxuyan qız" loading="lazy">
   
@@ -63,7 +72,7 @@
     <p class="dimensions">70 × 80 sm</p>
     <p class="price">Qiymət sorğu ilə</p>
   </div>
-</a><a class="artwork-card" href="eser/geride-qalan-xatire.html">
+</a><a class="artwork-card" href="eser/geride-qalan-xatire.html" data-themes="portret" data-status="for_sale">
   
     <img src="img/bad8972eec4843b4b6913533f2853c09.jpg" alt="Geridə qalan xatirə" loading="lazy">
   
@@ -74,7 +83,7 @@
     <p class="dimensions">80 × 60 sm</p>
     <p class="price">Qiymət sorğu ilə</p>
   </div>
-</a><a class="artwork-card" href="eser/qelebe.html">
+</a><a class="artwork-card" href="eser/qelebe.html" data-themes="heyvanlar" data-status="for_sale">
   
     <img src="img/f3542b6fa55e4f1388b831f8bc443eb4.jpg" alt="Qələbə" loading="lazy">
   
@@ -85,117 +94,7 @@
     <p class="dimensions">90 × 100 sm</p>
     <p class="price">Qiymət sorğu ilə</p>
   </div>
-</a><a class="artwork-card" href="eser/dalgalarin-zerif-toxunusu.html">
-  
-    <img src="img/438be25c6e30433d91d8e9ad44f3a66c.jpg" alt="Dalğaların zərif toxunuşu" loading="lazy">
-  
-  
-  <div class="artwork-card-info">
-    <h3>Dalğaların zərif toxunuşu</h3>
-    
-    <p class="dimensions">60 × 70 sm</p>
-    <p class="price">Qiymət sorğu ilə</p>
-  </div>
-</a><a class="artwork-card" href="eser/zeriflik.html">
-  
-    <img src="img/bfd7c7ed0bd54feca7a1d13afe8b0643.jpg" alt="Zəriflik" loading="lazy">
-  
-  
-  <div class="artwork-card-info">
-    <h3>Zəriflik</h3>
-    
-    <p class="dimensions">50 × 40 sm</p>
-    <p class="price">Qiymət sorğu ilə</p>
-  </div>
-</a><a class="artwork-card" href="eser/yeni-gun.html">
-  
-    <img src="img/d9cf54d12353492fa9f603971a5e901e.jpg" alt="Yeni gün" loading="lazy">
-  
-  
-  <div class="artwork-card-info">
-    <h3>Yeni gün</h3>
-    
-    <p class="dimensions">80 × 60 sm</p>
-    <p class="price">Qiymət sorğu ilə</p>
-  </div>
-</a><a class="artwork-card" href="eser/aktrisa.html">
-  
-    <img src="img/d7dc1066f5f8415f91696140c57bb8dc.jpg" alt="Aktrisa" loading="lazy">
-  
-  
-  <div class="artwork-card-info">
-    <h3>Aktrisa</h3>
-    
-    <p class="dimensions">50 × 40 sm</p>
-    <p class="price">Qiymət sorğu ilə</p>
-  </div>
-</a><a class="artwork-card" href="eser/gozlenti.html">
-  
-    <img src="img/d7ef0af970db4796ac6f9de2316ef726.jpg" alt="Gözlənti" loading="lazy">
-  
-  
-  <div class="artwork-card-info">
-    <h3>Gözlənti</h3>
-    
-    <p class="dimensions">60 × 40 sm</p>
-    <p class="price">Qiymət sorğu ilə</p>
-  </div>
-</a><a class="artwork-card" href="eser/boyuk-gozlentiler.html">
-  
-    <img src="img/2b71115c2d8746f6835219d28862f623.jpg" alt="Böyük gözləntilər" loading="lazy">
-  
-  
-  <div class="artwork-card-info">
-    <h3>Böyük gözləntilər</h3>
-    
-    <p class="dimensions">70 × 60 sm</p>
-    <p class="price">Qiymət sorğu ilə</p>
-  </div>
-</a><a class="artwork-card" href="eser/gunesli-gun.html">
-  
-    <img src="img/5ce1d4296b0d4a61bed5a15d4ed28df9.jpg" alt="Günəşli gün" loading="lazy">
-  
-  
-  <div class="artwork-card-info">
-    <h3>Günəşli gün</h3>
-    
-    <p class="dimensions">70 × 60 sm</p>
-    <p class="price">Qiymət sorğu ilə</p>
-  </div>
-</a><a class="artwork-card" href="eser/dalgalar.html">
-  
-    <img src="img/91c4b6ba3fbc43d2817eed1e18fa8933.jpg" alt="Dalğalar" loading="lazy">
-  
-  
-  <div class="artwork-card-info">
-    <h3>Dalğalar</h3>
-    
-    <p class="dimensions">60 × 90 sm</p>
-    <p class="price">Qiymət sorğu ilə</p>
-  </div>
-</a><a class="artwork-card" href="eser/tenha-qayiq.html">
-  
-    <img src="img/fd9cb9107281458481c270112fdaae6d.jpg" alt="Tənha qayıq" loading="lazy">
-  
-  
-  <div class="artwork-card-info">
-    <h3>Tənha qayıq</h3>
-    
-    <p class="dimensions">40 × 50 sm</p>
-    <p class="price">Qiymət sorğu ilə</p>
-  </div>
-</a><a class="artwork-card" href="eser/afurca-yolu.html">
-  
-    <img src="img/39382aac8ba24730833e188fa8671cd5.jpg" alt="Afurca yolu" loading="lazy">
-  
-  
-  <div class="artwork-card-info">
-    <h3>Afurca yolu</h3>
-    
-    <p class="dimensions">25 × 35 sm</p>
-    <p class="price">Qiymət sorğu ilə</p>
-  </div>
-</a><a class="artwork-card" href="eser/piano-calan-qiz.html">
+</a><a class="artwork-card" href="eser/piano-calan-qiz.html" data-themes="portret" data-status="sold">
   
     <img src="img/melodiya-framed.jpg" alt="Piano çalan qız" loading="lazy">
   
@@ -206,7 +105,51 @@
     
     
   </div>
-</a><a class="artwork-card" href="eser/yagmurlu-bir-gun.html">
+</a><a class="artwork-card" href="eser/dalgalarin-zerif-toxunusu.html" data-themes="portret,deniz" data-status="for_sale">
+  
+    <img src="img/438be25c6e30433d91d8e9ad44f3a66c.jpg" alt="Dalğaların zərif toxunuşu" loading="lazy">
+  
+  
+  <div class="artwork-card-info">
+    <h3>Dalğaların zərif toxunuşu</h3>
+    
+    <p class="dimensions">60 × 70 sm</p>
+    <p class="price">Qiymət sorğu ilə</p>
+  </div>
+</a><a class="artwork-card" href="eser/zeriflik.html" data-themes="portret,heyvanlar" data-status="for_sale">
+  
+    <img src="img/bfd7c7ed0bd54feca7a1d13afe8b0643.jpg" alt="Zəriflik" loading="lazy">
+  
+  
+  <div class="artwork-card-info">
+    <h3>Zəriflik</h3>
+    
+    <p class="dimensions">50 × 40 sm</p>
+    <p class="price">Qiymət sorğu ilə</p>
+  </div>
+</a><a class="artwork-card" href="eser/yeni-gun.html" data-themes="portret,deniz" data-status="for_sale">
+  
+    <img src="img/d9cf54d12353492fa9f603971a5e901e.jpg" alt="Yeni gün" loading="lazy">
+  
+  
+  <div class="artwork-card-info">
+    <h3>Yeni gün</h3>
+    
+    <p class="dimensions">80 × 60 sm</p>
+    <p class="price">Qiymət sorğu ilə</p>
+  </div>
+</a><a class="artwork-card" href="eser/aktrisa.html" data-themes="portret" data-status="for_sale">
+  
+    <img src="img/d7dc1066f5f8415f91696140c57bb8dc.jpg" alt="Aktrisa" loading="lazy">
+  
+  
+  <div class="artwork-card-info">
+    <h3>Aktrisa</h3>
+    
+    <p class="dimensions">50 × 40 sm</p>
+    <p class="price">Qiymət sorğu ilə</p>
+  </div>
+</a><a class="artwork-card" href="eser/yagmurlu-bir-gun.html" data-themes="portret" data-status="sold">
   
     <img src="img/sari-cetir-framed.jpg" alt="Yağmurlu bir gün" loading="lazy">
   
@@ -217,7 +160,51 @@
     
     
   </div>
-</a><a class="artwork-card" href="eser/penalopa.html">
+</a><a class="artwork-card" href="eser/gozlenti.html" data-themes="portret" data-status="for_sale">
+  
+    <img src="img/d7ef0af970db4796ac6f9de2316ef726.jpg" alt="Gözlənti" loading="lazy">
+  
+  
+  <div class="artwork-card-info">
+    <h3>Gözlənti</h3>
+    
+    <p class="dimensions">60 × 40 sm</p>
+    <p class="price">Qiymət sorğu ilə</p>
+  </div>
+</a><a class="artwork-card" href="eser/boyuk-gozlentiler.html" data-themes="portret,deniz" data-status="for_sale">
+  
+    <img src="img/2b71115c2d8746f6835219d28862f623.jpg" alt="Böyük gözləntilər" loading="lazy">
+  
+  
+  <div class="artwork-card-info">
+    <h3>Böyük gözləntilər</h3>
+    
+    <p class="dimensions">70 × 60 sm</p>
+    <p class="price">Qiymət sorğu ilə</p>
+  </div>
+</a><a class="artwork-card" href="eser/gunesli-gun.html" data-themes="portret,menzere" data-status="for_sale">
+  
+    <img src="img/5ce1d4296b0d4a61bed5a15d4ed28df9.jpg" alt="Günəşli gün" loading="lazy">
+  
+  
+  <div class="artwork-card-info">
+    <h3>Günəşli gün</h3>
+    
+    <p class="dimensions">70 × 60 sm</p>
+    <p class="price">Qiymət sorğu ilə</p>
+  </div>
+</a><a class="artwork-card" href="eser/dalgalar.html" data-themes="deniz,menzere" data-status="for_sale">
+  
+    <img src="img/91c4b6ba3fbc43d2817eed1e18fa8933.jpg" alt="Dalğalar" loading="lazy">
+  
+  
+  <div class="artwork-card-info">
+    <h3>Dalğalar</h3>
+    
+    <p class="dimensions">60 × 90 sm</p>
+    <p class="price">Qiymət sorğu ilə</p>
+  </div>
+</a><a class="artwork-card" href="eser/penalopa.html" data-themes="portret" data-status="sold">
   
     <img src="img/sukut-framed.jpg" alt="Penalopa" loading="lazy">
   
@@ -228,9 +215,32 @@
     
     
   </div>
+</a><a class="artwork-card" href="eser/tenha-qayiq.html" data-themes="deniz,menzere" data-status="for_sale">
+  
+    <img src="img/fd9cb9107281458481c270112fdaae6d.jpg" alt="Tənha qayıq" loading="lazy">
+  
+  
+  <div class="artwork-card-info">
+    <h3>Tənha qayıq</h3>
+    
+    <p class="dimensions">40 × 50 sm</p>
+    <p class="price">Qiymət sorğu ilə</p>
+  </div>
+</a><a class="artwork-card" href="eser/afurca-yolu.html" data-themes="menzere" data-status="for_sale">
+  
+    <img src="img/39382aac8ba24730833e188fa8671cd5.jpg" alt="Afurca yolu" loading="lazy">
+  
+  
+  <div class="artwork-card-info">
+    <h3>Afurca yolu</h3>
+    
+    <p class="dimensions">25 × 35 sm</p>
+    <p class="price">Qiymət sorğu ilə</p>
+  </div>
 </a>
   </div>
   
+  <p class="empty-state" id="empty-js" hidden>Hazırda uyğun əsər tapılmadı.</p>
 </section>
 
 
@@ -243,5 +253,5 @@
     
   </div>
 </footer>
-<script>(function(){var t="ODk4MTU3MjA1NDk5",m={"kitab-oxuyan-qiz": {"title": "Kitab oxuyan qız", "title_en": "Girl Reading a Book", "price": null, "status": "for_sale"}, "geride-qalan-xatire": {"title": "Geridə qalan xatirə", "title_en": "A Memory Left Behind", "price": null, "status": "for_sale"}, "qelebe": {"title": "Qələbə", "title_en": "Victory", "price": null, "status": "for_sale"}, "dalgalarin-zerif-toxunusu": {"title": "Dalğaların zərif toxunuşu", "title_en": "The Gentle Touch of the Waves", "price": null, "status": "for_sale"}, "zeriflik": {"title": "Zəriflik", "title_en": "Grace", "price": null, "status": "for_sale"}, "yeni-gun": {"title": "Yeni gün", "title_en": "A New Day", "price": null, "status": "for_sale"}, "aktrisa": {"title": "Aktrisa", "title_en": "The Actress", "price": null, "status": "for_sale"}, "gozlenti": {"title": "Gözlənti", "title_en": "Anticipation", "price": null, "status": "for_sale"}, "boyuk-gozlentiler": {"title": "Böyük gözləntilər", "title_en": "Great Expectations", "price": null, "status": "for_sale"}, "gunesli-gun": {"title": "Günəşli gün", "title_en": "A Sunny Day", "price": null, "status": "for_sale"}, "dalgalar": {"title": "Dalğalar", "title_en": "Waves", "price": null, "status": "for_sale"}, "tenha-qayiq": {"title": "Tənha qayıq", "title_en": "The Lonely Boat", "price": null, "status": "for_sale"}, "afurca-yolu": {"title": "Afurca yolu", "title_en": "The Road to Afurja", "price": null, "status": "for_sale"}, "piano-calan-qiz": {"title": "Piano çalan qız", "title_en": "Girl Playing the Piano", "price": null, "status": "sold"}, "yagmurlu-bir-gun": {"title": "Yağmurlu bir gün", "title_en": "A Rainy Day", "price": null, "status": "sold"}, "penalopa": {"title": "Penalopa", "title_en": "Penelope", "price": null, "status": "sold"}};function n(){try{return atob(t).split('').reverse().join('')}catch(e){return''}}document.querySelectorAll('[data-wa]').forEach(function(a){a.setAttribute('target','_blank');a.setAttribute('rel','noopener nofollow');a.addEventListener('click',function(){var s=a.getAttribute('data-wa'),i=m[s],msg,en=document.documentElement.lang==='en',ti=i?(en?i.title_en:i.title):'';if(!s){msg=en?'Hello! I\'m interested in the Rafaelli collection.':'Salam! Rafaelli kolleksiyası ilə maraqlanıram.'}else if(i&&i.price){msg=en?'Hello! I\'m interested in the work "'+ti+'". '+location.href:'Salam! "'+ti+'" adlı əsərlə maraqlanıram. '+location.href}else{msg=en?'Hello! I would like to know the price and details of the work "'+ti+'". '+location.href:'Salam! "'+ti+'" adlı əsərin qiyməti və ətraflı məlumat barədə maraqlanıram. '+location.href}a.href='https://wa.me/'+n()+'?text='+encodeURIComponent(msg);});});})();</script><script>(function(){var f=document.querySelector('.filter-bar');if(!f)return;var M={"kitab-oxuyan-qiz": {"title": "Kitab oxuyan qız", "title_en": "Girl Reading a Book", "price": null, "status": "for_sale"}, "geride-qalan-xatire": {"title": "Geridə qalan xatirə", "title_en": "A Memory Left Behind", "price": null, "status": "for_sale"}, "qelebe": {"title": "Qələbə", "title_en": "Victory", "price": null, "status": "for_sale"}, "dalgalarin-zerif-toxunusu": {"title": "Dalğaların zərif toxunuşu", "title_en": "The Gentle Touch of the Waves", "price": null, "status": "for_sale"}, "zeriflik": {"title": "Zəriflik", "title_en": "Grace", "price": null, "status": "for_sale"}, "yeni-gun": {"title": "Yeni gün", "title_en": "A New Day", "price": null, "status": "for_sale"}, "aktrisa": {"title": "Aktrisa", "title_en": "The Actress", "price": null, "status": "for_sale"}, "gozlenti": {"title": "Gözlənti", "title_en": "Anticipation", "price": null, "status": "for_sale"}, "boyuk-gozlentiler": {"title": "Böyük gözləntilər", "title_en": "Great Expectations", "price": null, "status": "for_sale"}, "gunesli-gun": {"title": "Günəşli gün", "title_en": "A Sunny Day", "price": null, "status": "for_sale"}, "dalgalar": {"title": "Dalğalar", "title_en": "Waves", "price": null, "status": "for_sale"}, "tenha-qayiq": {"title": "Tənha qayıq", "title_en": "The Lonely Boat", "price": null, "status": "for_sale"}, "afurca-yolu": {"title": "Afurca yolu", "title_en": "The Road to Afurja", "price": null, "status": "for_sale"}, "piano-calan-qiz": {"title": "Piano çalan qız", "title_en": "Girl Playing the Piano", "price": null, "status": "sold"}, "yagmurlu-bir-gun": {"title": "Yağmurlu bir gün", "title_en": "A Rainy Day", "price": null, "status": "sold"}, "penalopa": {"title": "Penalopa", "title_en": "Penelope", "price": null, "status": "sold"}};f.addEventListener('submit',function(e){e.preventDefault();var st=f.querySelector('[name=status]').value,mn=parseFloat(f.querySelector('[name=mov_qiymet]').value),mx=parseFloat(f.querySelector('[name=max_qiymet]').value),shown=0;document.querySelectorAll('.artwork-card').forEach(function(c){var s=(c.getAttribute('href')||'').split('/').pop().replace('.html',''),i=M[s]||{},ok=true;if(st&&i.status!==st)ok=false;if(!isNaN(mn)&&!(i.price>=mn))ok=false;if(!isNaN(mx)&&!(i.price<=mx))ok=false;c.hidden=!ok;if(ok)shown++;});});})();</script></body>
+<script>(function(){var t="ODk4MTU3MjA1NDk5",m={"kitab-oxuyan-qiz": {"title": "Kitab oxuyan qız", "title_en": "Girl Reading a Book", "price": null, "status": "for_sale"}, "geride-qalan-xatire": {"title": "Geridə qalan xatirə", "title_en": "A Memory Left Behind", "price": null, "status": "for_sale"}, "qelebe": {"title": "Qələbə", "title_en": "Victory", "price": null, "status": "for_sale"}, "piano-calan-qiz": {"title": "Piano çalan qız", "title_en": "Girl Playing the Piano", "price": null, "status": "sold"}, "dalgalarin-zerif-toxunusu": {"title": "Dalğaların zərif toxunuşu", "title_en": "The Gentle Touch of the Waves", "price": null, "status": "for_sale"}, "zeriflik": {"title": "Zəriflik", "title_en": "Grace", "price": null, "status": "for_sale"}, "yeni-gun": {"title": "Yeni gün", "title_en": "A New Day", "price": null, "status": "for_sale"}, "aktrisa": {"title": "Aktrisa", "title_en": "The Actress", "price": null, "status": "for_sale"}, "yagmurlu-bir-gun": {"title": "Yağmurlu bir gün", "title_en": "A Rainy Day", "price": null, "status": "sold"}, "gozlenti": {"title": "Gözlənti", "title_en": "Anticipation", "price": null, "status": "for_sale"}, "boyuk-gozlentiler": {"title": "Böyük gözləntilər", "title_en": "Great Expectations", "price": null, "status": "for_sale"}, "gunesli-gun": {"title": "Günəşli gün", "title_en": "A Sunny Day", "price": null, "status": "for_sale"}, "dalgalar": {"title": "Dalğalar", "title_en": "Waves", "price": null, "status": "for_sale"}, "penalopa": {"title": "Penalopa", "title_en": "Penelope", "price": null, "status": "sold"}, "tenha-qayiq": {"title": "Tənha qayıq", "title_en": "The Lonely Boat", "price": null, "status": "for_sale"}, "afurca-yolu": {"title": "Afurca yolu", "title_en": "The Road to Afurja", "price": null, "status": "for_sale"}};function n(){try{return atob(t).split('').reverse().join('')}catch(e){return''}}document.querySelectorAll('[data-wa]').forEach(function(a){a.setAttribute('target','_blank');a.setAttribute('rel','noopener nofollow');a.addEventListener('click',function(){var s=a.getAttribute('data-wa'),i=m[s],msg,en=document.documentElement.lang==='en',ti=i?(en?i.title_en:i.title):'';if(!s){msg=en?'Hello! I\'m interested in the Rafaelli collection.':'Salam! Rafaelli kolleksiyası ilə maraqlanıram.'}else if(i&&i.price){msg=en?'Hello! I\'m interested in the work "'+ti+'". '+location.href:'Salam! "'+ti+'" adlı əsərlə maraqlanıram. '+location.href}else{msg=en?'Hello! I would like to know the price and details of the work "'+ti+'". '+location.href:'Salam! "'+ti+'" adlı əsərin qiyməti və ətraflı məlumat barədə maraqlanıram. '+location.href}a.href='https://wa.me/'+n()+'?text='+encodeURIComponent(msg);});});})();</script><script>(function(){var q=new URLSearchParams(location.search),th=q.get('movzu')||'',st=q.get('status')||'',n=0;document.querySelectorAll('.artwork-card').forEach(function(c){var ts=(c.dataset.themes||'').split(',');var ok=(!th||ts.indexOf(th)>-1)&&(!st||c.dataset.status===st);c.hidden=!ok;if(ok)n++;});document.querySelectorAll('.theme-filter .chip').forEach(function(a){a.classList.toggle('active',(a.dataset.theme||'')===th);a.setAttribute('href','?'+[a.dataset.theme?'movzu='+a.dataset.theme:'',st?'status='+st:''].filter(Boolean).join('&'));});document.querySelectorAll('.status-filter .chip').forEach(function(a){a.classList.toggle('active',(a.dataset.status||'')===st);a.setAttribute('href','?'+[th?'movzu='+th:'',a.dataset.status?'status='+a.dataset.status:''].filter(Boolean).join('&'));});var e=document.getElementById('empty-js');if(e)e.hidden=n>0;})();</script></body>
 </html>
