@@ -186,8 +186,46 @@
   <div class="contact-list">
     <p><span class="contact-label">WhatsApp</span> <a href="#" data-wa="" target="_blank" rel="noopener nofollow">Write to us</a></p>
     
-    
   </div>
+  <form class="contact-form" id="contact-form" data-k="bW9jLmxpYW1nQDFpbGxlYWZhcmFuaWJhcw==" novalidate>
+  <h3>Send us a message</h3>
+  <p class="form-intro">Write your question, proposal or the work you are interested in — we will reply soon.</p>
+  <div class="form-row">
+    <label>Your name<input type="text" name="name" required maxlength="100" autocomplete="name"></label>
+    <label>Your email<input type="email" name="email" required maxlength="150" autocomplete="email"></label>
+  </div>
+  <label>Phone (optional)<input type="tel" name="phone" maxlength="40" autocomplete="tel"></label>
+  <label>Your message<textarea name="message" rows="5" required maxlength="3000"></textarea></label>
+  <input type="text" name="_honey" class="hp" tabindex="-1" autocomplete="off" aria-hidden="true">
+  <button type="submit" class="btn btn-primary">Send</button>
+  <p class="form-status" role="status" aria-live="polite"></p>
+</form>
+<script>
+(function () {
+  var f = document.getElementById('contact-form'); if (!f) return;
+  var st = f.querySelector('.form-status'), btn = f.querySelector('button[type=submit]');
+  var T = {sending: "Sending\u2026", ok: "Thank you! Your message has been sent \u2014 we will get back to you soon.", err: "The message could not be sent. Please try again shortly or write to us on WhatsApp.", send: "Send"};
+  try { var w = sessionStorage.getItem('rafaelli_work'); if (w) { f.message.value = w; sessionStorage.removeItem('rafaelli_work'); } } catch (e) {}
+  function to() { try { return atob(f.dataset.k).split('').reverse().join(''); } catch (e) { return ''; } }
+  f.addEventListener('submit', function (e) {
+    e.preventDefault();
+    if (f._honey.value) return;
+    if (!f.reportValidity()) return;
+    btn.disabled = true; btn.textContent = T.sending; st.textContent = ''; st.className = 'form-status';
+    fetch('https://formsubmit.co/ajax/' + to(), {
+      method: 'POST', headers: {'Content-Type': 'application/json', 'Accept': 'application/json'},
+      body: JSON.stringify({
+        name: f.name.value, email: f.email.value, phone: f.phone.value || '-', message: f.message.value,
+        _subject: 'Rafaelli saytından yeni mesaj — ' + f.name.value, _replyto: f.email.value,
+        _template: 'table', _captcha: 'false', page: location.href
+      })
+    }).then(function (r) { return r.json().then(function (j) { if (!r.ok || String(j.success) !== 'true') throw j; }); })
+      .then(function () { f.reset(); st.textContent = T.ok; st.classList.add('ok'); })
+      .catch(function () { st.textContent = T.err; st.classList.add('err'); })
+      .finally(function () { btn.disabled = false; btn.textContent = T.send; });
+  });
+})();
+</script>
 </section>
 
 

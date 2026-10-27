@@ -591,3 +591,23 @@ img { max-width: 100%; }
 .private-label { color: var(--gold); font-weight: 600; font-style: italic; margin: 0; font-size: .95rem; }
 .private-note { color: var(--ink-soft); font-style: italic; }
 @media (max-width: 600px) { .badge-private { font-size: .66rem; padding: 4px 7px; } }
+
+/* ---------- Contact form ---------- */
+.contact-form { max-width: 640px; margin: 28px 0 8px; padding: 24px; background: #fff; border: 1px solid var(--border); border-radius: var(--radius); }
+.contact-form h3 { margin: 0 0 4px; font-size: 1.3rem; }
+.form-intro { color: var(--ink-soft); margin: 0 0 16px; font-size: .95rem; }
+.contact-form label { display: block; font-size: .85rem; color: var(--ink-soft); margin-bottom: 12px; }
+.contact-form input, .contact-form textarea { display: block; width: 100%; margin-top: 4px; padding: 11px 12px; font: inherit; font-size: 1rem;
+  color: var(--ink); border: 1px solid var(--border); border-radius: var(--radius); background: #fdfcf9; box-sizing: border-box; }
+.contact-form input:focus, .contact-form textarea:focus { outline: none; border-color: var(--gold); box-shadow: 0 0 0 3px rgba(169,129,47,.15); }
+.contact-form textarea { resize: vertical; min-height: 120px; }
+.form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+@media (max-width: 600px) { .form-row { grid-template-columns: 1fr; gap: 0; } .contact-form { padding: 18px; } }
+.contact-form .btn { min-width: 160px; }
+.contact-form .btn[disabled] { opacity: .6; cursor: wait; }
+.contact-form .hp { position: absolute; left: -9999px; width: 1px; height: 1px; opacity: 0; }
+.form-status { margin: 12px 0 0; font-size: .95rem; }
+.form-status.ok { color: #2e7d32; font-weight: 600; }
+.form-status.err { color: var(--sold, #C62828); }
+.mail-link { display: inline-block; margin-top: 12px; color: var(--gold); font-size: .95rem; }
+.mail-link:hover { text-decoration: underline; }

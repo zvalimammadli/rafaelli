@@ -186,8 +186,46 @@
   <div class="contact-list">
     <p><span class="contact-label">WhatsApp</span> <a href="#" data-wa="" target="_blank" rel="noopener nofollow">Bizə yazın</a></p>
     
-    
   </div>
+  <form class="contact-form" id="contact-form" data-k="bW9jLmxpYW1nQDFpbGxlYWZhcmFuaWJhcw==" novalidate>
+  <h3>Bizə e-poçtla yazın</h3>
+  <p class="form-intro">Sualınızı, təklifinizi və ya maraqlandığınız əsəri yazın — tezliklə cavab verəcəyik.</p>
+  <div class="form-row">
+    <label>Adınız<input type="text" name="name" required maxlength="100" autocomplete="name"></label>
+    <label>E-poçt ünvanınız<input type="email" name="email" required maxlength="150" autocomplete="email"></label>
+  </div>
+  <label>Telefon (istəyə bağlı)<input type="tel" name="phone" maxlength="40" autocomplete="tel"></label>
+  <label>Mesajınız<textarea name="message" rows="5" required maxlength="3000"></textarea></label>
+  <input type="text" name="_honey" class="hp" tabindex="-1" autocomplete="off" aria-hidden="true">
+  <button type="submit" class="btn btn-primary">Göndər</button>
+  <p class="form-status" role="status" aria-live="polite"></p>
+</form>
+<script>
+(function () {
+  var f = document.getElementById('contact-form'); if (!f) return;
+  var st = f.querySelector('.form-status'), btn = f.querySelector('button[type=submit]');
+  var T = {sending: "G\u00f6nd\u0259rilir\u2026", ok: "T\u0259\u015f\u0259kk\u00fcr edirik! Mesaj\u0131n\u0131z g\u00f6nd\u0259rildi, tezlikl\u0259 sizinl\u0259 \u0259laq\u0259 saxlayaca\u011f\u0131q.", err: "Mesaj g\u00f6nd\u0259rilm\u0259di. Z\u0259hm\u0259t olmasa bir azdan yenid\u0259n c\u0259hd edin v\u0259 ya WhatsApp il\u0259 yaz\u0131n.", send: "G\u00f6nd\u0259r"};
+  try { var w = sessionStorage.getItem('rafaelli_work'); if (w) { f.message.value = w; sessionStorage.removeItem('rafaelli_work'); } } catch (e) {}
+  function to() { try { return atob(f.dataset.k).split('').reverse().join(''); } catch (e) { return ''; } }
+  f.addEventListener('submit', function (e) {
+    e.preventDefault();
+    if (f._honey.value) return;
+    if (!f.reportValidity()) return;
+    btn.disabled = true; btn.textContent = T.sending; st.textContent = ''; st.className = 'form-status';
+    fetch('https://formsubmit.co/ajax/' + to(), {
+      method: 'POST', headers: {'Content-Type': 'application/json', 'Accept': 'application/json'},
+      body: JSON.stringify({
+        name: f.name.value, email: f.email.value, phone: f.phone.value || '-', message: f.message.value,
+        _subject: 'Rafaelli saytından yeni mesaj — ' + f.name.value, _replyto: f.email.value,
+        _template: 'table', _captcha: 'false', page: location.href
+      })
+    }).then(function (r) { return r.json().then(function (j) { if (!r.ok || String(j.success) !== 'true') throw j; }); })
+      .then(function () { f.reset(); st.textContent = T.ok; st.classList.add('ok'); })
+      .catch(function () { st.textContent = T.err; st.classList.add('err'); })
+      .finally(function () { btn.disabled = false; btn.textContent = T.send; });
+  });
+})();
+</script>
 </section>
 
 

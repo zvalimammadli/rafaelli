@@ -140,6 +140,10 @@ document.querySelectorAll('.thumb-btn').forEach(btn => {
   });
 });
 
+document.querySelectorAll('.mail-link').forEach(function (a) {
+  a.addEventListener('click', function () { try { sessionStorage.setItem('rafaelli_work', a.dataset.work); } catch (e) {} });
+});
+
 /* ---- loupe (desktop) ---- */
 (function () {
   const img = document.getElementById('main-image'), lens = document.getElementById('zoom-lens');
