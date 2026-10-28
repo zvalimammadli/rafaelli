@@ -59,6 +59,26 @@
 </section>
 
 
+<section class="container intro-video" aria-labelledby="intro-title">
+  <p class="eyebrow">Meet us</p>
+  <h2 id="intro-title">Rafaelli Art — a virtual painting gallery</h2>
+  <div class="intro-player">
+    <video id="intro-video" preload="none" playsinline controls poster="../img/rafaelli-intro-cover.jpg">
+      <source src="../img/rafaelli-intro.mp4" type="video/mp4">
+    </video>
+    <button type="button" class="intro-play" id="intro-play" aria-label="Watch the video">
+      <span class="intro-play-icon" aria-hidden="true">▶</span><span>Watch the video</span>
+    </button>
+  </div>
+</section>
+<script>
+(function(){var v=document.getElementById('intro-video'),b=document.getElementById('intro-play');if(!v||!b)return;
+v.controls=false;
+b.addEventListener('click',function(){v.controls=true;v.play();b.hidden=true;});
+v.addEventListener('ended',function(){v.controls=false;b.hidden=false;try{v.currentTime=0;v.load();}catch(e){}});
+})();
+</script>
+
 <section class="container how-to-buy" aria-labelledby="how-title">
   <h2 id="how-title">How to buy</h2>
   <ol class="steps">
