@@ -628,3 +628,7 @@ img { max-width: 100%; }
 .intro-play-icon { display: inline-grid; place-items: center; width: 44px; height: 44px; border-radius: 50%; background: var(--gold); font-size: 1rem; padding-left: 3px; }
 .intro-play[hidden] { display: none; }
 @media (max-width: 600px) { .intro-video { padding-top: 28px; } .intro-play { padding: 10px 18px 10px 10px; font-size: .9rem; } .intro-play-icon { width: 36px; height: 36px; } }
+
+/* inline enquiry form on artwork page */
+.detail-info .contact-cta .contact-form { margin: 8px 0 0; max-width: none; }
+.detail-info .contact-cta#sorgu { scroll-margin-top: 150px; border: 0; padding: 0; background: none; box-shadow: none; }

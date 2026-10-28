@@ -41,10 +41,10 @@
   <div class="home-hero-text">
     <p class="eyebrow">Original works by local and international artists</p>
     <h1>A story for your wall</h1>
-    <p class="home-hero-lead">Every piece is handmade and one of a kind. Choose the work you love, message us on WhatsApp — we will arrange the rest together.</p>
+    <p class="home-hero-lead">Every piece is handmade and one of a kind. Choose the work you love, write to us — we will arrange the rest together.</p>
     <div class="home-hero-actions">
       <a href="../en/kolleksiya.html" class="btn btn-primary">View the collection</a>
-      <a href="#" data-wa="" target="_blank" rel="noopener nofollow" class="btn btn-secondary">Message us on WhatsApp</a>
+      <a href="../en/index.html#elaqe" class="btn btn-secondary">Write to us</a>
     </div>
   </div>
   <a class="home-hero-figure" href="../en/eser/kitab-oxuyan-qiz.html">
@@ -83,7 +83,7 @@ v.addEventListener('ended',function(){v.controls=false;b.hidden=false;try{v.curr
   <h2 id="how-title">How to buy</h2>
   <ol class="steps">
     <li><span class="step-num">1</span><h3>Choose a work</h3><p>Tap a painting: its size, technique, story and how it looks in a room are on its page.</p></li>
-    <li><span class="step-num">2</span><h3>Message us on WhatsApp</h3><p>For the price and details, the button on the artwork page opens WhatsApp with the work&#39;s name already filled in.</p></li>
+    <li><span class="step-num">2</span><h3>Write to us</h3><p>Write to us from the form on the artwork page — the work&#39;s name is added automatically and we reply by email shortly.</p></li>
     <li><span class="step-num">3</span><h3>Arrange delivery</h3><p>We agree framing, payment and delivery with you directly.</p></li>
   </ol>
 </section>
@@ -204,11 +204,10 @@ v.addEventListener('ended',function(){v.controls=false;b.hidden=false;try{v.curr
 <section id="elaqe" class="container contact-section">
   <h2>Contact</h2>
   <div class="contact-list">
-    <p><span class="contact-label">WhatsApp</span> <a href="#" data-wa="" target="_blank" rel="noopener nofollow">Write to us</a></p>
     <p><span class="contact-label">Instagram</span> <a href="https://www.instagram.com/rafaelliartcom/" target="_blank" rel="noopener">https://www.instagram.com/rafaelliartcom/</a></p>
     <p><span class="contact-label">Email</span> <a class="js-mail" data-k="bW9jLnRyYWlsbGVhZmFyQG9mbmk=" href="#">…</a></p>
   </div>
-  <form class="contact-form" id="contact-form" data-k="bW9jLnRyYWlsbGVhZmFyQG9mbmk=" novalidate>
+  <form class="contact-form" id="contact-form" data-k="bW9jLnRyYWlsbGVhZmFyQG9mbmk=" data-prefill="" data-subject="" novalidate>
   <h3>Send us a message</h3>
   <p class="form-intro">Write your question, proposal or the work you are interested in — we will reply soon.</p>
   <div class="form-row">
@@ -225,8 +224,9 @@ v.addEventListener('ended',function(){v.controls=false;b.hidden=false;try{v.curr
 (function () {
   var f = document.getElementById('contact-form'); if (!f) return;
   var st = f.querySelector('.form-status'), btn = f.querySelector('button[type=submit]');
-  var T = {sending: "Sending\u2026", ok: "Thank you! Your message has been sent \u2014 we will get back to you soon.", err: "The message could not be sent. Please try again shortly or write to us on WhatsApp.", send: "Send"};
+  var T = {sending: "Sending\u2026", ok: "Thank you! Your message has been sent \u2014 we will get back to you soon.", err: "The message could not be sent. Please try again shortly or email info@rafaelliart.com.", send: "Send"};
   try { var w = sessionStorage.getItem('rafaelli_work'); if (w) { f.message.value = w; sessionStorage.removeItem('rafaelli_work'); } } catch (e) {}
+  if (!f.message.value && f.dataset.prefill) f.message.value = f.dataset.prefill;
   function to() { try { return atob(f.dataset.k).split('').reverse().join(''); } catch (e) { return ''; } }
   f.addEventListener('submit', function (e) {
     e.preventDefault();
@@ -237,11 +237,11 @@ v.addEventListener('ended',function(){v.controls=false;b.hidden=false;try{v.curr
       method: 'POST', headers: {'Content-Type': 'application/json', 'Accept': 'application/json'},
       body: JSON.stringify({
         name: f.name.value, email: f.email.value, phone: f.phone.value || '-', message: f.message.value,
-        _subject: 'Rafaelli saytından yeni mesaj — ' + f.name.value, _replyto: f.email.value,
+        _subject: (f.dataset.subject ? 'Rafaelli — «' + f.dataset.subject + '» əsəri ilə bağlı: ' : 'Rafaelli saytından yeni mesaj — ') + f.name.value, _replyto: f.email.value,
         _template: 'table', _captcha: 'false', page: location.href
       })
     }).then(function (r) { return r.json().then(function (j) { if (!r.ok || String(j.success) !== 'true') throw j; }); })
-      .then(function () { f.reset(); st.textContent = T.ok; st.classList.add('ok'); })
+      .then(function () { f.reset(); if (f.dataset.prefill) f.message.value = f.dataset.prefill; st.textContent = T.ok; st.classList.add('ok'); })
       .catch(function (j) {
         var m = (j && j.message) ? String(j.message) : '';
         st.textContent = /activat/i.test(m) ? 'Forma hələ aktivləşdirilməyib: e-poçt qutusuna “Activate Form” məktubu göndərildi. / The form needs activation — check the inbox for the “Activate Form” email.' : T.err + (m ? ' (' + m + ')' : '');
@@ -267,5 +267,5 @@ v.addEventListener('ended',function(){v.controls=false;b.hidden=false;try{v.curr
   </div>
 </footer>
 <script>document.querySelectorAll('.js-mail').forEach(function(a){try{var e=atob(a.dataset.k).split('').reverse().join('');a.href='mailto:'+e+'?subject=Rafaelli';a.textContent=e;}catch(x){}});</script>
-<script>(function(){var t="ODk4MTU3MjA1NDk5",m={"kitab-oxuyan-qiz": {"title": "Kitab oxuyan qız", "title_en": "Girl Reading a Book", "price": null, "status": "for_sale"}, "qelebe": {"title": "Qələbə", "title_en": "Victory", "price": null, "status": "sold"}, "geride-qalan-xatire": {"title": "Geridə qalan xatirə", "title_en": "A Memory Left Behind", "price": null, "status": "for_sale"}, "benovseyi-axsam": {"title": "Bənövşəyi axşam", "title_en": "Violet Evening", "price": null, "status": "sold"}, "zeriflik": {"title": "Zəriflik", "title_en": "Grace", "price": null, "status": "for_sale"}, "yeni-gun": {"title": "Yeni gün", "title_en": "A New Day", "price": null, "status": "for_sale"}, "piano-calan-qiz": {"title": "Piano çalan qız", "title_en": "Girl Playing the Piano", "price": null, "status": "sold"}, "gozlenti": {"title": "Gözlənti", "title_en": "Anticipation", "price": null, "status": "for_sale"}, "aktrisa": {"title": "Aktrisa", "title_en": "The Actress", "price": null, "status": "sold"}, "boyuk-gozlentiler": {"title": "Böyük gözləntilər", "title_en": "Great Expectations", "price": null, "status": "for_sale"}, "yelkenli-qayiq": {"title": "Yelkənli qayıq", "title_en": "The Sailboat", "price": null, "status": "private"}, "gunesli-gun": {"title": "Günəşli gün", "title_en": "A Sunny Day", "price": null, "status": "for_sale"}, "qurub-yelkenleri": {"title": "Qürub yelkənləri", "title_en": "Sails at Sunset", "price": null, "status": "sold"}, "dalgalar": {"title": "Dalğalar", "title_en": "Waves", "price": null, "status": "for_sale"}, "yagmurlu-bir-gun": {"title": "Yağmurlu bir gün", "title_en": "A Rainy Day", "price": null, "status": "sold"}, "tenha-qayiq": {"title": "Tənha qayıq", "title_en": "The Lonely Boat", "price": null, "status": "for_sale"}, "dumanli-limanda-qurub": {"title": "Dumanlı limanda qürub", "title_en": "Sunset over a Misty Harbour", "price": null, "status": "sold"}, "afurca-yolu": {"title": "Afurca yolu", "title_en": "The Road to Afurja", "price": null, "status": "for_sale"}, "parisde-bir-gun": {"title": "Parisdə bir gün", "title_en": "A Day in Paris", "price": null, "status": "sold"}, "dalgalarin-zerif-toxunusu": {"title": "Dalğaların zərif toxunuşu", "title_en": "The Gentle Touch of the Waves", "price": null, "status": "for_sale"}, "penalopa": {"title": "Penalopa", "title_en": "Penelope", "price": null, "status": "sold"}};function n(){try{return atob(t).split('').reverse().join('')}catch(e){return''}}document.querySelectorAll('[data-wa]').forEach(function(a){a.setAttribute('target','_blank');a.setAttribute('rel','noopener nofollow');a.addEventListener('click',function(){var s=a.getAttribute('data-wa'),i=m[s],msg,en=document.documentElement.lang==='en',ti=i?(en?i.title_en:i.title):'';if(!s){msg=en?'Hello! I\'m interested in the Rafaelli collection.':'Salam! Rafaelli kolleksiyası ilə maraqlanıram.'}else if(i&&i.price){msg=en?'Hello! I\'m interested in the work "'+ti+'". '+location.href:'Salam! "'+ti+'" adlı əsərlə maraqlanıram. '+location.href}else{msg=en?'Hello! I would like to know the price and details of the work "'+ti+'". '+location.href:'Salam! "'+ti+'" adlı əsərin qiyməti və ətraflı məlumat barədə maraqlanıram. '+location.href}a.href='https://wa.me/'+n()+'?text='+encodeURIComponent(msg);});});})();</script></body>
+</body>
 </html>
