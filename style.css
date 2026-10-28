@@ -611,3 +611,6 @@ img { max-width: 100%; }
 .form-status.err { color: var(--sold, #C62828); }
 .mail-link { display: inline-block; margin-top: 12px; color: var(--gold); font-size: .95rem; }
 .mail-link:hover { text-decoration: underline; }
+
+.footer-mail { margin: 4px 0; }
+.footer-mail a { color: var(--gold); }
