@@ -7,20 +7,20 @@
   var EN = (document.documentElement.lang || 'az').slice(0, 2) === 'en';
   var T = EN ? {
     title: 'See it framed', none: 'No frame', noneSub: 'Canvas only', all: 'All', qizili: 'Gold', gumusu: 'Silver', qara: 'Black', krem: 'Cream', qehveyi: 'Brown', rengli: 'Colour',
-    frame: 'Frame', options: 'Options', mat: 'Add a 5 cm white mount', wall: 'Wall', art: 'Painting', framed: 'Framed size',
+    frame: 'Frame', options: 'Options', mat: 'Add a 5 cm mount', matColor: 'Mount colour', wall: 'Wall colour', art: 'Painting', framed: 'Framed size',
     profile: 'Profile', code: 'Code', close: 'Close', cta: 'Enquire with this frame', unit: 'cm',
     note: 'Frame codes and profile sizes are from the Xətai Art Centre catalogue. Colours and patterns are drawn from the catalogue photos; the exact finish is confirmed with your order.',
     ctaNote: 'Estimated price; we will confirm the final price by email.',
     priceT: 'Frame price (painting not included)', frameL: 'Frame', matL: 'Mount', labor: 'workshop fee', none0: 'No frame selected', est: 'estimate',
-    msg: function (t, f, mat, size, pr) { return 'Hello! I am interested in “' + t + '” ' + (f ? 'with frame code ' + f.code + ' – ' + f.en + ' (profile ' + f.w + '×' + f.d + ' mm' + (mat ? ', 5 cm white mount' : '') + '), framed size ' + size + ' cm' + (pr ? ', estimated frame price ' + pr : '') + '.' : 'without a frame.') + ' Could you tell me the total price?'; }
+    msg: function (t, f, mat, size, pr) { return 'Hello! I am interested in “' + t + '” ' + (f ? 'with frame code ' + f.code + ' – ' + f.en + ' (profile ' + f.w + '×' + f.d + ' mm' + (mat ? ', 5 cm ' + mat + ' mount' : '') + '), framed size ' + size + ' cm' + (pr ? ', estimated frame price ' + pr : '') + '.' : 'without a frame.') + ' Could you tell me the total price?'; }
   } : {
     title: 'Çərçivə ilə bax', none: 'Çərçivəsiz', noneSub: 'Yalnız kətan', all: 'Hamısı', qizili: 'Qızılı', gumusu: 'Gümüşü', qara: 'Qara', krem: 'Krem', qehveyi: 'Qəhvəyi', rengli: 'Rəngli',
-    frame: 'Çərçivə', options: 'Əlavələr', mat: '5 sm ağ paspartu əlavə et', wall: 'Divar', art: 'Rəsm', framed: 'Çərçivəli ölçü',
+    frame: 'Çərçivə', options: 'Əlavələr', mat: '5 sm paspartu əlavə et', matColor: 'Paspartu rəngi', wall: 'Divar rəngi', art: 'Rəsm', framed: 'Çərçivəli ölçü',
     profile: 'Profil', code: 'Kod', close: 'Bağla', cta: 'Bu çərçivə ilə sorğu göndər', unit: 'sm',
     note: 'Çərçivə kodları və profil ölçüləri Xətai Sənət Mərkəzinin kataloqundandır. Rəng və naxışlar kataloq şəkillərinə əsasən çəkilib, dəqiq görünüş sifarişdə təsdiqlənir.',
     ctaNote: 'Qiymət təxminidir, dəqiq qiyməti e-poçtla təsdiqləyəcəyik.',
     priceT: 'Çərçivənin qiyməti (rəsm daxil deyil)', frameL: 'Çərçivə', matL: 'Paspartu', labor: 'iş haqqı', none0: 'Çərçivə seçilməyib', est: 'təxmini',
-    msg: function (t, f, mat, size, pr) { return 'Salam! «' + t + '» əsəri ilə ' + (f ? 'kod ' + f.code + ' («' + f.az + '») çərçivə ilə (profil ' + f.w + '×' + f.d + ' mm' + (mat ? ', 5 sm ağ paspartu' : '') + ', çərçivəli ölçü ' + size + ' sm' + (pr ? ', təxmini çərçivə qiyməti ' + pr : '') + ') maraqlanıram.' : 'çərçivəsiz maraqlanıram.') + ' Ümumi qiyməti bildirə bilərsiniz?'; }
+    msg: function (t, f, mat, size, pr) { return 'Salam! «' + t + '» əsəri ilə ' + (f ? 'kod ' + f.code + ' («' + f.az + '») çərçivə ilə (profil ' + f.w + '×' + f.d + ' mm' + (mat ? ', 5 sm ' + mat + ' paspartu' : '') + ', çərçivəli ölçü ' + size + ' sm' + (pr ? ', təxmini çərçivə qiyməti ' + pr : '') + ') maraqlanıram.' : 'çərçivəsiz maraqlanıram.') + ' Ümumi qiyməti bildirə bilərsiniz?'; }
   };
 
   var FRAMES = window.RAFAELLI_FRAMES.filter(function (f) { return !f.hidden; });
@@ -30,6 +30,8 @@
   var nameOf = function (f) { return (EN ? f.en : f.az) || (T.code + ' ' + f.code); };
   var WALLS = ['#ECE7DE', '#CFDDC3', '#8C948E', '#9C3D33', '#2E2B28'];
   var MAT = 50; // mm
+  var MATS = [['#F6F3EC', 'ağ', 'white'], ['#EFE6D2', 'fil sümüyü', 'ivory'], ['#E2D8C3', 'bej', 'beige'], ['#C9CACB', 'açıq boz', 'light grey'],
+    ['#4A4B4D', 'antrasit', 'charcoal'], ['#1E1E1F', 'qara', 'black'], ['#1F2E4A', 'tünd göy', 'navy'], ['#2F4A3A', 'tünd yaşıl', 'forest green'], ['#6E2430', 'bordo', 'burgundy']];
   var PR = window.RAFAELLI_FRAME_PRICING || { labor: 8, matPerM2: 45, matCut: 5 };
   function priceOf(f, mat) {
     var m = mat ? MAT : 0, iW = art.W + 2 * m, iH = art.H + 2 * m, out = { frame: 0, len: 0, mat: 0 };
@@ -39,7 +41,7 @@
   }
   var azn = function (v) { return v.toLocaleString(EN ? 'en-GB' : 'az-AZ') + '\u00a0₼'; };
   var art = { W: +btn.dataset.w * 10, H: +btn.dataset.h * 10, title: btn.dataset.title || '' };
-  var st = { frame: FRAMES.filter(function (f) { return f.code === '5514'; })[0] || FRAMES[0], filter: 'all', mat: false, wall: WALLS[0] };
+  var st = { frame: FRAMES.filter(function (f) { return f.code === '5514'; })[0] || FRAMES[0], filter: 'all', mat: false, matColor: MATS[0], wall: WALLS[0] };
   var img = new Image(); img.src = btn.dataset.src;
 
   /* ---------- drawing ---------- */
@@ -161,7 +163,7 @@
     ctx.save(); ctx.shadowColor = 'rgba(0,0,0,.4)'; ctx.shadowBlur = Math.max(6, OW * .04); ctx.shadowOffsetY = Math.max(3, OW * .018);
     ctx.fillStyle = '#000'; ctx.fillRect(ox, oy, OW, OH); ctx.restore();
     var F = fw * s, ix = ox + F, iy = oy + F, IW = iW * s, IH = iH * s;
-    if (m) { var M = m * s, lw = Math.max(1, s * 2.5); ctx.fillStyle = '#F4F1EB'; ctx.fillRect(ix, iy, IW, IH);
+    if (m) { var M = m * s, lw = Math.max(1, s * 2.5); ctx.fillStyle = st.matColor[0]; ctx.fillRect(ix, iy, IW, IH);
       drawArt(ctx, ix + M, iy + M, art.W * s, art.H * s);
       ctx.strokeStyle = 'rgba(255,255,255,.95)'; ctx.lineWidth = lw; ctx.strokeRect(ix + M - lw / 2, iy + M - lw / 2, art.W * s + lw, art.H * s + lw);
       innerShadow(ctx, ix + M, iy + M, art.W * s, art.H * s, Math.max(2, s * 4));
@@ -188,15 +190,16 @@
         '<div><p class="fr-label">' + T.frame + '</p><div class="fr-chips"></div></div>' +
         '<div class="fr-grid"></div>' +
         '<div><p class="fr-label">' + T.options + '</p><div class="fr-row">' +
-          '<label class="fr-toggle"><input type="checkbox" class="fr-mat"> ' + T.mat + '</label>' +
-          '<div class="fr-walls" role="group" aria-label="' + T.wall + '"></div></div></div>' +
+          '<label class="fr-toggle"><input type="checkbox" class="fr-mat"> ' + T.mat + '</label></div>' +
+          '<div class="fr-sub fr-matbox" hidden><p class="fr-label">' + T.matColor + ' <span class="fr-matname"></span></p><div class="fr-walls fr-mats" role="group" aria-label="' + T.matColor + '"></div></div>' +
+          '<div class="fr-sub"><p class="fr-label">' + T.wall + '</p><div class="fr-walls fr-wallset" role="group" aria-label="' + T.wall + '"></div></div></div>' +
         '<p class="fr-note">' + T.note + '</p>' +
       '</div><div class="fr-foot"><div class="fr-price" aria-live="polite"></div><button type="button" class="btn btn-primary fr-cta">' + T.cta + '</button><p class="fr-note">' + T.ctaNote + '</p></div></div>' +
     '</div>';
   document.body.appendChild(modal);
   modal.querySelector('.fr-head h2 span').textContent = art.title + ' · ' + cm(art.W) + ' × ' + cm(art.H) + ' ' + T.unit;
   var canvas = modal.querySelector('canvas'), wrap = modal.querySelector('.fr-canvas-wrap'), facts = modal.querySelector('.fr-facts');
-  var chips = modal.querySelector('.fr-chips'), grid = modal.querySelector('.fr-grid'), walls = modal.querySelector('.fr-walls');
+  var chips = modal.querySelector('.fr-chips'), grid = modal.querySelector('.fr-grid'), walls = modal.querySelector('.fr-wallset'), mats = modal.querySelector('.fr-mats'), matbox = modal.querySelector('.fr-matbox');
 
   function render() {
     if (modal.hidden) return;
@@ -245,7 +248,16 @@
     c.addEventListener('click', function () { st.wall = w; walls.querySelectorAll('.fr-wall').forEach(function (x) { x.setAttribute('aria-pressed', String(x === c)); }); render(); });
     walls.appendChild(c);
   });
-  modal.querySelector('.fr-mat').addEventListener('change', function (e) { st.mat = e.target.checked; buildGrid(); render(); });
+  var matName = function () { return st.matColor[EN ? 2 : 1]; };
+  MATS.forEach(function (m) {
+    var c = document.createElement('button'); c.type = 'button'; c.className = 'fr-wall'; c.style.background = m[0]; c.title = m[EN ? 2 : 1];
+    c.setAttribute('aria-label', m[EN ? 2 : 1]); c.setAttribute('aria-pressed', String(m === st.matColor));
+    c.addEventListener('click', function () { st.matColor = m; mats.querySelectorAll('.fr-wall').forEach(function (x) { x.setAttribute('aria-pressed', String(x === c)); });
+      modal.querySelector('.fr-matname').textContent = '· ' + matName(); render(); });
+    mats.appendChild(c);
+  });
+  modal.querySelector('.fr-matname').textContent = '· ' + matName();
+  modal.querySelector('.fr-mat').addEventListener('change', function (e) { st.mat = e.target.checked; matbox.hidden = !st.mat; buildGrid(); render(); });
 
   var lastFocus = null;
   function open() { lastFocus = document.activeElement; modal.hidden = false; document.body.style.overflow = 'hidden'; buildGrid(); render(); modal.querySelector('.fr-x').focus(); }
@@ -261,7 +273,7 @@
   modal.querySelector('.fr-cta').addEventListener('click', function () {
     var f = st.frame, m = st.mat ? MAT : 0, fw = f ? f.w : 0;
     var size = cm(art.W + 2 * m + 2 * fw) + ' × ' + cm(art.H + 2 * m + 2 * fw);
-    var pc = priceOf(f, st.mat), text = T.msg(art.title, f, st.mat, size, pc.total ? azn(pc.total) : '');
+    var pc = priceOf(f, st.mat), text = T.msg(art.title, f, st.mat ? matName() : false, size, pc.total ? azn(pc.total) : '');
     close();
     var form = document.getElementById('contact-form');
     if (form && form.message) {

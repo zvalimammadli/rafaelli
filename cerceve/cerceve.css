@@ -65,3 +65,7 @@
 .fr-price small { font-size: .78rem; color: var(--ink-soft); font-variant-numeric: tabular-nums; }
 .fr-cp { font-size: .86rem; font-weight: 500; color: var(--gold); font-variant-numeric: tabular-nums; }
 @media (max-width: 860px) { .fr-price-row b { font-size: 1.25rem; } .fr-foot { gap: 4px; padding-top: 10px; padding-bottom: 10px; } .fr-foot .fr-note { display: none; } }
+.fr-sub { margin-top: 12px; }
+.fr-sub .fr-label { margin-bottom: 6px; }
+.fr-matname { text-transform: none; letter-spacing: 0; color: var(--ink); font-size: .8rem; }
+.fr-mats { flex-wrap: wrap; }
