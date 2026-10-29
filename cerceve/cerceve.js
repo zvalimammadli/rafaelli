@@ -10,15 +10,17 @@
     frame: 'Frame', options: 'Options', mat: 'Add a 5 cm white mount', wall: 'Wall', art: 'Painting', framed: 'Framed size',
     profile: 'Profile', code: 'Code', close: 'Close', cta: 'Enquire with this frame', unit: 'cm',
     note: 'Frame codes and profile sizes are from the Xətai Art Centre catalogue. Colours and patterns are drawn from the catalogue photos; the exact finish is confirmed with your order.',
-    ctaNote: 'We will confirm the frame price by email.',
-    msg: function (t, f, mat, size) { return 'Hello! I am interested in “' + t + '” ' + (f ? 'with frame code ' + f.code + ' – ' + f.en + ' (profile ' + f.w + '×' + f.d + ' mm' + (mat ? ', 5 cm white mount' : '') + '), framed size ' + size + ' cm.' : 'without a frame.') + ' Could you tell me the price?'; }
+    ctaNote: 'Estimated price; we will confirm the final price by email.',
+    priceT: 'Frame price (painting not included)', frameL: 'Frame', matL: 'Mount', labor: 'workshop fee', none0: 'No frame selected', est: 'estimate',
+    msg: function (t, f, mat, size, pr) { return 'Hello! I am interested in “' + t + '” ' + (f ? 'with frame code ' + f.code + ' – ' + f.en + ' (profile ' + f.w + '×' + f.d + ' mm' + (mat ? ', 5 cm white mount' : '') + '), framed size ' + size + ' cm' + (pr ? ', estimated frame price ' + pr : '') + '.' : 'without a frame.') + ' Could you tell me the total price?'; }
   } : {
     title: 'Çərçivə ilə bax', none: 'Çərçivəsiz', noneSub: 'Yalnız kətan', all: 'Hamısı', qizili: 'Qızılı', gumusu: 'Gümüşü', qara: 'Qara', krem: 'Krem', qehveyi: 'Qəhvəyi', rengli: 'Rəngli',
     frame: 'Çərçivə', options: 'Əlavələr', mat: '5 sm ağ paspartu əlavə et', wall: 'Divar', art: 'Rəsm', framed: 'Çərçivəli ölçü',
     profile: 'Profil', code: 'Kod', close: 'Bağla', cta: 'Bu çərçivə ilə sorğu göndər', unit: 'sm',
     note: 'Çərçivə kodları və profil ölçüləri Xətai Sənət Mərkəzinin kataloqundandır. Rəng və naxışlar kataloq şəkillərinə əsasən çəkilib, dəqiq görünüş sifarişdə təsdiqlənir.',
-    ctaNote: 'Çərçivənin qiymətini e-poçtla bildirəcəyik.',
-    msg: function (t, f, mat, size) { return 'Salam! «' + t + '» əsəri ilə ' + (f ? 'kod ' + f.code + ' («' + f.az + '») çərçivə ilə (profil ' + f.w + '×' + f.d + ' mm' + (mat ? ', 5 sm ağ paspartu' : '') + ', çərçivəli ölçü ' + size + ' sm) maraqlanıram.' : 'çərçivəsiz maraqlanıram.') + ' Qiyməti bildirə bilərsiniz?'; }
+    ctaNote: 'Qiymət təxminidir, dəqiq qiyməti e-poçtla təsdiqləyəcəyik.',
+    priceT: 'Çərçivənin qiyməti (rəsm daxil deyil)', frameL: 'Çərçivə', matL: 'Paspartu', labor: 'iş haqqı', none0: 'Çərçivə seçilməyib', est: 'təxmini',
+    msg: function (t, f, mat, size, pr) { return 'Salam! «' + t + '» əsəri ilə ' + (f ? 'kod ' + f.code + ' («' + f.az + '») çərçivə ilə (profil ' + f.w + '×' + f.d + ' mm' + (mat ? ', 5 sm ağ paspartu' : '') + ', çərçivəli ölçü ' + size + ' sm' + (pr ? ', təxmini çərçivə qiyməti ' + pr : '') + ') maraqlanıram.' : 'çərçivəsiz maraqlanıram.') + ' Ümumi qiyməti bildirə bilərsiniz?'; }
   };
 
   var FRAMES = window.RAFAELLI_FRAMES.filter(function (f) { return !f.hidden; });
@@ -28,6 +30,14 @@
   var nameOf = function (f) { return (EN ? f.en : f.az) || (T.code + ' ' + f.code); };
   var WALLS = ['#ECE7DE', '#CFDDC3', '#8C948E', '#9C3D33', '#2E2B28'];
   var MAT = 50; // mm
+  var PR = window.RAFAELLI_FRAME_PRICING || { labor: 8, matPerM2: 45, matCut: 5 };
+  function priceOf(f, mat) {
+    var m = mat ? MAT : 0, iW = art.W + 2 * m, iH = art.H + 2 * m, out = { frame: 0, len: 0, mat: 0 };
+    if (f && f.price) { out.len = (2 * (iW + iH) + 8 * f.w) / 1000; out.frame = Math.round(out.len * f.price + PR.labor); }
+    if (mat) out.mat = Math.round((iW * iH - art.W * art.H) / 1e6 * PR.matPerM2 + PR.matCut);
+    out.total = out.frame + out.mat; return out;
+  }
+  var azn = function (v) { return v.toLocaleString(EN ? 'en-GB' : 'az-AZ') + '\u00a0₼'; };
   var art = { W: +btn.dataset.w * 10, H: +btn.dataset.h * 10, title: btn.dataset.title || '' };
   var st = { frame: FRAMES.filter(function (f) { return f.code === '5514'; })[0] || FRAMES[0], filter: 'all', mat: false, wall: WALLS[0] };
   var img = new Image(); img.src = btn.dataset.src;
@@ -181,7 +191,7 @@
           '<label class="fr-toggle"><input type="checkbox" class="fr-mat"> ' + T.mat + '</label>' +
           '<div class="fr-walls" role="group" aria-label="' + T.wall + '"></div></div></div>' +
         '<p class="fr-note">' + T.note + '</p>' +
-      '</div><div class="fr-foot"><button type="button" class="btn btn-primary fr-cta">' + T.cta + '</button><p class="fr-note">' + T.ctaNote + '</p></div></div>' +
+      '</div><div class="fr-foot"><div class="fr-price" aria-live="polite"></div><button type="button" class="btn btn-primary fr-cta">' + T.cta + '</button><p class="fr-note">' + T.ctaNote + '</p></div></div>' +
     '</div>';
   document.body.appendChild(modal);
   modal.querySelector('.fr-head h2 span').textContent = art.title + ' · ' + cm(art.W) + ' × ' + cm(art.H) + ' ' + T.unit;
@@ -196,7 +206,12 @@
     var r = compose(ctx, cw, ch, st.frame, st.mat, st.wall, true), f = st.frame;
     facts.innerHTML = '<span>' + T.art + ': <b>' + cm(art.W) + ' × ' + cm(art.H) + ' ' + T.unit + '</b></span>' +
       '<span>' + T.framed + ': <b>' + cm(r.oW) + ' × ' + cm(r.oH) + ' ' + T.unit + '</b></span>' +
-      (f ? '<span><b>' + nameOf(f) + '</b> · ' + T.code + ' <b>' + f.code + '</b> · ' + T.profile + ' <b>' + f.w + ' × ' + f.d + ' mm</b></span>' : '<span><b>' + T.none + '</b></span>');
+      '';
+    var pc = priceOf(f, st.mat), pb = modal.querySelector('.fr-price'), len = pc.len.toLocaleString(EN ? 'en-GB' : 'az-AZ', { maximumFractionDigits: 2 });
+    pb.innerHTML = '<div class="fr-price-row"><span>' + T.priceT + '</span><b>' + (pc.total ? azn(pc.total) : '0 ₼') + '</b></div>' +
+      '<small>' + (f ? T.frameL + ': ' + len + ' m × ' + f.price + ' ₼ + ' + PR.labor + ' ₼ ' + T.labor + ' = ' + azn(pc.frame) : T.none0) +
+      (st.mat ? ' · ' + T.matL + ': ' + azn(pc.mat) : '') + '</small>';
+    facts.innerHTML += (f ? '<span><b>' + nameOf(f) + '</b> · ' + T.code + ' <b>' + f.code + '</b> · ' + T.profile + ' <b>' + f.w + ' × ' + f.d + ' mm</b></span>' : '<span><b>' + T.none + '</b></span>');
   }
   function thumb(cv, f) {
     var c = cv.getContext('2d'), W = cv.width, H = cv.height, fw = 22 + f.w / 138 * 46, o = 18;
@@ -207,8 +222,8 @@
   }
   function card(f) {
     var b = document.createElement('button'); b.type = 'button'; b.className = 'fr-card'; b.setAttribute('aria-pressed', String(f === st.frame));
-    if (f) { b.innerHTML = '<canvas width="200" height="160"></canvas><b>' + nameOf(f) + '</b><small>' + T.code + ' ' + f.code + ' · ' + f.w + '×' + f.d + ' mm</small>'; }
-    else { b.innerHTML = '<div class="fr-none">' + T.noneSub + '</div><b>' + T.none + '</b><small>—</small>'; }
+    if (f) { b.innerHTML = '<canvas width="200" height="160"></canvas><b>' + nameOf(f) + '</b><small>' + T.code + ' ' + f.code + ' · ' + f.w + '×' + f.d + ' mm</small>' + (f.price ? '<span class="fr-cp">' + azn(priceOf(f, st.mat).frame) + '</span>' : ''); }
+    else { b.innerHTML = '<div class="fr-none">' + T.noneSub + '</div><b>' + T.none + '</b><small>—</small><span class="fr-cp">0 ₼</span>'; }
     b.addEventListener('click', function () { st.frame = f; grid.querySelectorAll('.fr-card').forEach(function (c) { c.setAttribute('aria-pressed', String(c === b)); }); render(); });
     b._f = f; return b;
   }
@@ -230,7 +245,7 @@
     c.addEventListener('click', function () { st.wall = w; walls.querySelectorAll('.fr-wall').forEach(function (x) { x.setAttribute('aria-pressed', String(x === c)); }); render(); });
     walls.appendChild(c);
   });
-  modal.querySelector('.fr-mat').addEventListener('change', function (e) { st.mat = e.target.checked; render(); });
+  modal.querySelector('.fr-mat').addEventListener('change', function (e) { st.mat = e.target.checked; buildGrid(); render(); });
 
   var lastFocus = null;
   function open() { lastFocus = document.activeElement; modal.hidden = false; document.body.style.overflow = 'hidden'; buildGrid(); render(); modal.querySelector('.fr-x').focus(); }
@@ -246,7 +261,7 @@
   modal.querySelector('.fr-cta').addEventListener('click', function () {
     var f = st.frame, m = st.mat ? MAT : 0, fw = f ? f.w : 0;
     var size = cm(art.W + 2 * m + 2 * fw) + ' × ' + cm(art.H + 2 * m + 2 * fw);
-    var text = T.msg(art.title, f, st.mat, size);
+    var pc = priceOf(f, st.mat), text = T.msg(art.title, f, st.mat, size, pc.total ? azn(pc.total) : '');
     close();
     var form = document.getElementById('contact-form');
     if (form && form.message) {
