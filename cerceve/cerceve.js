@@ -26,7 +26,7 @@
     .filter(function (k) { return FRAMES.some(function (f) { return f.fam === k; }); })
     .map(function (k) { return [k, T[k], function (f) { return f.fam === k; }]; }));
   var nameOf = function (f) { return (EN ? f.en : f.az) || (T.code + ' ' + f.code); };
-  var WALLS = ['#ECE7DE', '#8C948E', '#2E2B28'];
+  var WALLS = ['#ECE7DE', '#CFDDC3', '#8C948E', '#9C3D33', '#2E2B28'];
   var MAT = 50; // mm
   var art = { W: +btn.dataset.w * 10, H: +btn.dataset.h * 10, title: btn.dataset.title || '' };
   var st = { frame: FRAMES.filter(function (f) { return f.code === '5514'; })[0] || FRAMES[0], filter: 'all', mat: false, wall: WALLS[0] };
@@ -158,7 +158,7 @@
     } else drawArt(ctx, ix, iy, IW, IH);
     if (f) { innerShadow(ctx, ix, iy, IW, IH, Math.max(2, F * .18)); drawFrame(ctx, ox, oy, OW, OH, F, f); }
     if (showScale) {
-      var bar = 100 * s, bx = 16, by = ch - 18, dark = wall !== WALLS[0];
+      var bar = 100 * s, bx = 16, by = ch - 18, dark = (function (h) { var n = parseInt(h.slice(1), 16); return (0.299 * (n >> 16 & 255) + 0.587 * (n >> 8 & 255) + 0.114 * (n & 255)) < 150; })(wall);
       ctx.strokeStyle = ctx.fillStyle = dark ? 'rgba(255,255,255,.85)' : 'rgba(38,34,32,.75)'; ctx.lineWidth = 1.5; ctx.beginPath();
       ctx.moveTo(bx, by); ctx.lineTo(bx + bar, by); ctx.moveTo(bx, by - 5); ctx.lineTo(bx, by + 5); ctx.moveTo(bx + bar, by - 5); ctx.lineTo(bx + bar, by + 5); ctx.stroke();
       ctx.font = "13px 'Jost', Arial, sans-serif"; ctx.fillText('10 ' + T.unit, bx + bar + 8, by + 4);
