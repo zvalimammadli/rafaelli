@@ -8,7 +8,7 @@
   var T = EN ? {
     title: 'See it framed', none: 'No frame', noneSub: 'Canvas only', all: 'All', qizili: 'Gold', gumusu: 'Silver', qara: 'Black', krem: 'Cream', qehveyi: 'Brown', rengli: 'Colour',
     frame: 'Frame', options: 'Options', mat: 'Add a 5 cm mount', matColor: 'Mount colour', wall: 'Wall colour', art: 'Painting', framed: 'Framed size',
-    profile: 'Profile', code: 'Code', close: 'Close', cta: 'Enquire with this frame', unit: 'cm',
+    profile: 'Profile', code: 'Code', close: 'Close', cta: 'Send by email', ctaIg: 'Send on Instagram', unit: 'cm',
     note: 'Frame codes and profile sizes are from the Xətai Art Centre catalogue. Colours and patterns are drawn from the catalogue photos; the exact finish is confirmed with your order.',
     ctaNote: 'Estimated price; we will confirm the final price by email.',
     priceT: 'Frame price (painting not included)', frameL: 'Frame', matL: 'Mount', labor: 'workshop fee', none0: 'No frame selected', est: 'estimate',
@@ -16,7 +16,7 @@
   } : {
     title: 'Çərçivə ilə bax', none: 'Çərçivəsiz', noneSub: 'Yalnız kətan', all: 'Hamısı', qizili: 'Qızılı', gumusu: 'Gümüşü', qara: 'Qara', krem: 'Krem', qehveyi: 'Qəhvəyi', rengli: 'Rəngli',
     frame: 'Çərçivə', options: 'Əlavələr', mat: '5 sm paspartu əlavə et', matColor: 'Paspartu rəngi', wall: 'Divar rəngi', art: 'Rəsm', framed: 'Çərçivəli ölçü',
-    profile: 'Profil', code: 'Kod', close: 'Bağla', cta: 'Bu çərçivə ilə sorğu göndər', unit: 'sm',
+    profile: 'Profil', code: 'Kod', close: 'Bağla', cta: 'E-poçtla göndər', ctaIg: 'Instagram-da göndər', unit: 'sm',
     note: 'Çərçivə kodları və profil ölçüləri Xətai Sənət Mərkəzinin kataloqundandır. Rəng və naxışlar kataloq şəkillərinə əsasən çəkilib, dəqiq görünüş sifarişdə təsdiqlənir.',
     ctaNote: 'Qiymət təxminidir, dəqiq qiyməti e-poçtla təsdiqləyəcəyik.',
     priceT: 'Çərçivənin qiyməti (rəsm daxil deyil)', frameL: 'Çərçivə', matL: 'Paspartu', labor: 'iş haqqı', none0: 'Çərçivə seçilməyib', est: 'təxmini',
@@ -194,7 +194,9 @@
           '<div class="fr-sub fr-matbox" hidden><p class="fr-label">' + T.matColor + ' <span class="fr-matname"></span></p><div class="fr-walls fr-mats" role="group" aria-label="' + T.matColor + '"></div></div>' +
           '<div class="fr-sub"><p class="fr-label">' + T.wall + '</p><div class="fr-walls fr-wallset" role="group" aria-label="' + T.wall + '"></div></div></div>' +
         '<p class="fr-note">' + T.note + '</p>' +
-      '</div><div class="fr-foot"><div class="fr-price" aria-live="polite"></div><button type="button" class="btn btn-primary fr-cta">' + T.cta + '</button><p class="fr-note">' + T.ctaNote + '</p></div></div>' +
+      '</div><div class="fr-foot"><div class="fr-price" aria-live="polite"></div><div class="fr-ctas"><a class="btn btn-primary ig-open ig-frame fr-ig" href="https://ig.me/m/rafaelliartcom" target="_blank" rel="noopener">' +
+        '<svg aria-hidden="true" viewBox="0 0 24 24" width="20" height="20"><rect x="3" y="3" width="18" height="18" rx="5" fill="none" stroke="currentColor" stroke-width="2"/><circle cx="12" cy="12" r="4.2" fill="none" stroke="currentColor" stroke-width="2"/><circle cx="17.3" cy="6.7" r="1.2" fill="currentColor"/></svg>' +
+        T.ctaIg + '</a><button type="button" class="btn btn-secondary fr-cta">' + T.cta + '</button></div><p class="fr-note">' + T.ctaNote + '</p></div></div>' +
     '</div>';
   document.body.appendChild(modal);
   modal.querySelector('.fr-head h2 span').textContent = art.title + ' · ' + cm(art.W) + ' × ' + cm(art.H) + ' ' + T.unit;
@@ -270,10 +272,18 @@
   window.addEventListener('resize', render);
   img.addEventListener('load', function () { render(); if (!modal.hidden) paintThumbs(); });
 
-  modal.querySelector('.fr-cta').addEventListener('click', function () {
+  function frameText() {
     var f = st.frame, m = st.mat ? MAT : 0, fw = f ? f.w : 0;
     var size = cm(art.W + 2 * m + 2 * fw) + ' × ' + cm(art.H + 2 * m + 2 * fw);
-    var pc = priceOf(f, st.mat), text = T.msg(art.title, f, st.mat ? matName() : false, size, pc.total ? azn(pc.total) : '');
+    var pc = priceOf(f, st.mat);
+    return T.msg(art.title, f, st.mat ? matName() : false, size, pc.total ? azn(pc.total) : '');
+  }
+  window.RAFAELLI_FRAME_MSG = frameText;
+  modal.querySelector('.fr-ig').addEventListener('click', function () {
+    var form = document.getElementById('contact-form'); if (form && form.message) form.message.value = frameText();
+  });
+  modal.querySelector('.fr-cta').addEventListener('click', function () {
+    var text = frameText();
     close();
     var form = document.getElementById('contact-form');
     if (form && form.message) {

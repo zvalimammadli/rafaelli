@@ -1,0 +1,16 @@
+/* Rafaelli — Instagram əlaqə düyməsi */
+.ig-cta { display: grid; gap: 8px; }
+.ig-cta h3 { margin: 0; }
+.ig-open { display: inline-flex; align-items: center; justify-content: center; gap: 10px; min-height: 50px; padding: 12px 22px; font-size: 1.02rem; text-decoration: none; }
+.ig-open svg { flex: 0 0 auto; }
+.ig-cta .ig-open { width: 100%; }
+.ig-cta .fine-print { margin: 0; }
+.ig-cta .ig-or { display: flex; align-items: center; gap: 12px; margin: 10px 0 0; color: var(--ink-soft); font-size: .85rem; text-transform: uppercase; letter-spacing: .1em; }
+.ig-or::before, .ig-or::after { content: ""; flex: 1; height: 1px; background: var(--border); }
+.ig-toast { position: fixed; left: 50%; bottom: calc(24px + env(safe-area-inset-bottom, 0px)); transform: translate(-50%, 20px); z-index: 2000;
+  background: var(--ink); color: var(--cream); padding: 12px 18px; border-radius: var(--radius); font-size: .92rem; max-width: min(92vw, 460px); text-align: center;
+  opacity: 0; pointer-events: none; box-shadow: 0 8px 24px rgba(0,0,0,.25); }
+.ig-toast.on { opacity: 1; transform: translate(-50%, 0); }
+@media (prefers-reduced-motion: no-preference) { .ig-toast { transition: opacity .2s, transform .2s; } }
+.mobile-cta .ig-open { min-height: 0; padding: 12px 16px; font-size: .95rem; width: auto; flex: 0 0 auto; }
+.ig-cta ~ .contact-form h3 { display: none; }

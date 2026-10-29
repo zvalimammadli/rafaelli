@@ -69,3 +69,6 @@
 .fr-sub .fr-label { margin-bottom: 6px; }
 .fr-matname { text-transform: none; letter-spacing: 0; color: var(--ink); font-size: .8rem; }
 .fr-mats { flex-wrap: wrap; }
+.fr-ctas { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
+.fr-ctas .btn { width: 100%; min-height: 46px; display: inline-flex; align-items: center; justify-content: center; gap: 8px; text-decoration: none; padding-left: 10px; padding-right: 10px; }
+@media (max-width: 600px) { .fr-ctas { grid-template-columns: 1fr; gap: 6px; } .fr-ctas .btn { min-height: 42px; } }
