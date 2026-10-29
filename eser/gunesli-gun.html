@@ -141,26 +141,41 @@
   try { var w = sessionStorage.getItem('rafaelli_work'); if (w) { f.message.value = w; sessionStorage.removeItem('rafaelli_work'); } } catch (e) {}
   if (!f.message.value && f.dataset.prefill) f.message.value = f.dataset.prefill;
   function to() { try { return atob(f.dataset.k).split('').reverse().join(''); } catch (e) { return ''; } }
+  function payload() {
+    return {
+      name: f.name.value, email: f.email.value, phone: f.phone.value || '-', message: f.message.value,
+      _subject: (f.dataset.subject ? 'Rafaelli — «' + f.dataset.subject + '» əsəri ilə bağlı: ' : 'Rafaelli saytından yeni mesaj — ') + f.name.value, _replyto: f.email.value,
+      _template: 'table', _captcha: 'false', page: location.href.split('#')[0]
+    };
+  }
+  /* ehtiyat yol: brauzer fon sorğusunu bloklasa, adi forma kimi göndər və geri qayıt */
+  function classicSend(data) {
+    var g = document.createElement('form'); g.method = 'POST'; g.action = 'https://formsubmit.co/' + to(); g.style.display = 'none';
+    data._next = location.href.split('#')[0] + '#gonderildi';
+    Object.keys(data).forEach(function (k) { var i = document.createElement('input'); i.type = 'hidden'; i.name = k; i.value = data[k]; g.appendChild(i); });
+    document.body.appendChild(g); g.submit();
+  }
+  if (location.hash === '#gonderildi') {
+    st.textContent = T.ok; st.classList.add('ok');
+    try { history.replaceState(null, '', location.pathname + location.search); } catch (e) {}
+    setTimeout(function () { f.scrollIntoView({ block: 'center' }); }, 300);
+  }
   f.addEventListener('submit', function (e) {
     e.preventDefault();
     if (f._honey.value) return;
     if (!f.reportValidity()) return;
     btn.disabled = true; btn.textContent = T.sending; st.textContent = ''; st.className = 'form-status';
-    fetch('https://formsubmit.co/ajax/' + to(), {
-      method: 'POST', headers: {'Content-Type': 'application/json', 'Accept': 'application/json'},
-      body: JSON.stringify({
-        name: f.name.value, email: f.email.value, phone: f.phone.value || '-', message: f.message.value,
-        _subject: (f.dataset.subject ? 'Rafaelli — «' + f.dataset.subject + '» əsəri ilə bağlı: ' : 'Rafaelli saytından yeni mesaj — ') + f.name.value, _replyto: f.email.value,
-        _template: 'table', _captcha: 'false', page: location.href
-      })
-    }).then(function (r) { return r.json().then(function (j) { if (!r.ok || String(j.success) !== 'true') throw j; }); })
-      .then(function () { f.reset(); if (f.dataset.prefill) f.message.value = f.dataset.prefill; st.textContent = T.ok; st.classList.add('ok'); })
+    var data = payload(), fd = new FormData();
+    Object.keys(data).forEach(function (k) { fd.append(k, data[k]); });
+    fetch('https://formsubmit.co/ajax/' + to(), { method: 'POST', headers: { 'Accept': 'application/json' }, body: fd })
+      .then(function (r) { return r.json().then(function (j) { if (!r.ok || String(j.success) !== 'true') throw j; }); })
+      .then(function () { f.reset(); if (f.dataset.prefill) f.message.value = f.dataset.prefill; st.textContent = T.ok; st.classList.add('ok'); btn.disabled = false; btn.textContent = T.send; })
       .catch(function (j) {
         var m = (j && j.message) ? String(j.message) : '';
+        if (j instanceof TypeError || /fetch|network|load failed/i.test(m)) { classicSend(data); return; }
         st.textContent = /activat/i.test(m) ? 'Forma hələ aktivləşdirilməyib: e-poçt qutusuna “Activate Form” məktubu göndərildi. / The form needs activation — check the inbox for the “Activate Form” email.' : T.err + (m ? ' (' + m + ')' : '');
-        st.classList.add('err');
-      })
-      .finally(function () { btn.disabled = false; btn.textContent = T.send; });
+        st.classList.add('err'); btn.disabled = false; btn.textContent = T.send;
+      });
   });
 })();
 </script>
