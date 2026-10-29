@@ -166,6 +166,7 @@
   function open() { lastFocus = document.activeElement; modal.hidden = false; document.body.style.overflow = 'hidden'; buildGrid(); render(); modal.querySelector('.fr-x').focus(); }
   function close() { modal.hidden = true; document.body.style.overflow = ''; if (lastFocus) lastFocus.focus(); }
   btn.addEventListener('click', open);
+  btn.classList.add('is-ready');
   modal.querySelector('.fr-x').addEventListener('click', close);
   modal.addEventListener('click', function (e) { if (e.target === modal) close(); });
   document.addEventListener('keydown', function (e) { if (!modal.hidden && e.key === 'Escape') close(); });

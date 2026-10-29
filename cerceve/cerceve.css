@@ -1,5 +1,7 @@
 /* Rafaelli — "Çərçivə ilə bax" pəncərəsi. Saytın style.css rəng dəyişənlərindən istifadə edir. */
-.frame-open { margin: 0 0 22px; display: inline-flex; align-items: center; gap: 10px; }
+.frame-open { margin: 0 0 22px; display: none;
+}
+.frame-open.is-ready { display: inline-flex; align-items: center; gap: 10px; }
 .frame-open svg { flex: 0 0 auto; }
 
 .fr-modal { position: fixed; inset: 0; z-index: 1000; background: rgba(38, 34, 32, .55); display: flex; align-items: center; justify-content: center; padding: 24px; }
