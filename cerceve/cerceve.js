@@ -6,28 +6,30 @@
   if (!btn || !window.RAFAELLI_FRAMES) return;
   var EN = (document.documentElement.lang || 'az').slice(0, 2) === 'en';
   var T = EN ? {
-    title: 'See it framed', none: 'No frame', noneSub: 'Canvas only', all: 'All', thin: 'Slim', mid: 'Medium', wide: 'Wide',
+    title: 'See it framed', none: 'No frame', noneSub: 'Canvas only', all: 'All', qizili: 'Gold', gumusu: 'Silver', qara: 'Black', krem: 'Cream', qehveyi: 'Brown', rengli: 'Colour',
     frame: 'Frame', options: 'Options', mat: 'Add a 5 cm white mount', wall: 'Wall', art: 'Painting', framed: 'Framed size',
     profile: 'Profile', code: 'Code', close: 'Close', cta: 'Enquire with this frame', unit: 'cm',
-    note: 'Frame codes and profile sizes are from the Xətai Art Centre catalogue. Colours shown are indicative; the final finish is confirmed with your order.',
+    note: 'Frame codes and profile sizes are from the Xətai Art Centre catalogue. Colours and patterns are drawn from the catalogue photos; the exact finish is confirmed with your order.',
     ctaNote: 'We will confirm the frame price by email.',
-    msg: function (t, f, mat, size) { return 'Hello! I am interested in “' + t + '” ' + (f ? 'with frame code ' + f.code + ' (profile ' + f.w + '×' + f.d + ' mm' + (mat ? ', 5 cm white mount' : '') + '), framed size ' + size + ' cm.' : 'without a frame.') + ' Could you tell me the price?'; }
+    msg: function (t, f, mat, size) { return 'Hello! I am interested in “' + t + '” ' + (f ? 'with frame code ' + f.code + ' – ' + f.en + ' (profile ' + f.w + '×' + f.d + ' mm' + (mat ? ', 5 cm white mount' : '') + '), framed size ' + size + ' cm.' : 'without a frame.') + ' Could you tell me the price?'; }
   } : {
-    title: 'Çərçivə ilə bax', none: 'Çərçivəsiz', noneSub: 'Yalnız kətan', all: 'Hamısı', thin: 'Nazik', mid: 'Orta', wide: 'Geniş',
+    title: 'Çərçivə ilə bax', none: 'Çərçivəsiz', noneSub: 'Yalnız kətan', all: 'Hamısı', qizili: 'Qızılı', gumusu: 'Gümüşü', qara: 'Qara', krem: 'Krem', qehveyi: 'Qəhvəyi', rengli: 'Rəngli',
     frame: 'Çərçivə', options: 'Əlavələr', mat: '5 sm ağ paspartu əlavə et', wall: 'Divar', art: 'Rəsm', framed: 'Çərçivəli ölçü',
     profile: 'Profil', code: 'Kod', close: 'Bağla', cta: 'Bu çərçivə ilə sorğu göndər', unit: 'sm',
-    note: 'Çərçivə kodları və profil ölçüləri Xətai Sənət Mərkəzinin kataloqundandır. Rənglər təxminidir, son görünüş sifarişdə təsdiqlənir.',
+    note: 'Çərçivə kodları və profil ölçüləri Xətai Sənət Mərkəzinin kataloqundandır. Rəng və naxışlar kataloq şəkillərinə əsasən çəkilib, dəqiq görünüş sifarişdə təsdiqlənir.',
     ctaNote: 'Çərçivənin qiymətini e-poçtla bildirəcəyik.',
-    msg: function (t, f, mat, size) { return 'Salam! «' + t + '» əsəri ilə ' + (f ? 'kod ' + f.code + ' çərçivə ilə (profil ' + f.w + '×' + f.d + ' mm' + (mat ? ', 5 sm ağ paspartu' : '') + ', çərçivəli ölçü ' + size + ' sm) maraqlanıram.' : 'çərçivəsiz maraqlanıram.') + ' Qiyməti bildirə bilərsiniz?'; }
+    msg: function (t, f, mat, size) { return 'Salam! «' + t + '» əsəri ilə ' + (f ? 'kod ' + f.code + ' («' + f.az + '») çərçivə ilə (profil ' + f.w + '×' + f.d + ' mm' + (mat ? ', 5 sm ağ paspartu' : '') + ', çərçivəli ölçü ' + size + ' sm) maraqlanıram.' : 'çərçivəsiz maraqlanıram.') + ' Qiyməti bildirə bilərsiniz?'; }
   };
 
   var FRAMES = window.RAFAELLI_FRAMES.filter(function (f) { return !f.hidden; });
-  var FILTERS = [['all', T.all, function () { return true; }], ['thin', T.thin, function (f) { return f.w <= 60; }],
-    ['mid', T.mid, function (f) { return f.w > 60 && f.w <= 90; }], ['wide', T.wide, function (f) { return f.w > 90; }]];
+  var FILTERS = [['all', T.all, function () { return true; }]].concat(['qizili', 'gumusu', 'qara', 'krem', 'qehveyi', 'rengli']
+    .filter(function (k) { return FRAMES.some(function (f) { return f.fam === k; }); })
+    .map(function (k) { return [k, T[k], function (f) { return f.fam === k; }]; }));
+  var nameOf = function (f) { return (EN ? f.en : f.az) || (T.code + ' ' + f.code); };
   var WALLS = ['#ECE7DE', '#8C948E', '#2E2B28'];
   var MAT = 50; // mm
   var art = { W: +btn.dataset.w * 10, H: +btn.dataset.h * 10, title: btn.dataset.title || '' };
-  var st = { frame: FRAMES[Math.min(11, FRAMES.length - 1)], filter: 'all', mat: false, wall: WALLS[0] };
+  var st = { frame: FRAMES.filter(function (f) { return f.code === '5514'; })[0] || FRAMES[0], filter: 'all', mat: false, wall: WALLS[0] };
   var img = new Image(); img.src = btn.dataset.src;
 
   /* ---------- drawing ---------- */
@@ -37,28 +39,92 @@
   var PROFILES = {
     flat: [[0, -.3], [.06, .18], [.13, 0], [.86, 0], [.93, .14], [1, -.4]],
     rounded: [[0, -.4], [.14, .04], [.38, .24], [.6, .04], [.84, -.18], [.92, .16], [1, -.45]],
-    stepped: [[0, -.45], [.07, .22], [.14, -.12], [.28, .28], [.4, -.04], [.52, -.22], [.6, .24], [.7, 0], [.8, -.26], [.87, .28], [.94, .04], [1, -.5]]
+    cove: [[0, -.25], [.08, .22], [.18, -.3], [.42, -.18], [.66, .06], [.82, .26], [.9, -.08], [1, -.45]],
+    stepped: [[0, -.45], [.07, .22], [.14, -.12], [.28, .2], [.4, -.02], [.52, -.12], [.6, .16], [.7, 0], [.8, -.2], [.87, .26], [.94, .04], [1, -.5]]
   };
-  function profileOf(f) { var r = f.d / f.w; return r < .4 ? 'flat' : r < .72 ? 'rounded' : 'stepped'; }
-  function drawFrame(ctx, ox, oy, oW, oH, w, f) {
-    var base = f.color || '#8B6B4A', grain = shade(base, -.55), prof = PROFILES[profileOf(f)];
-    var sides = [[ox, oy, 0, oW, .12], [ox + oW, oy, Math.PI / 2, oH, -.05], [ox + oW, oy + oH, Math.PI, oW, -.16], [ox, oy + oH, -Math.PI / 2, oH, .05]];
-    sides.forEach(function (s, si) {
-      var L = s[3]; ctx.save(); ctx.translate(s[0], s[1]); ctx.rotate(s[2]);
-      ctx.beginPath(); ctx.moveTo(0, 0); ctx.lineTo(L, 0); ctx.lineTo(L - w, w); ctx.lineTo(w, w); ctx.closePath(); ctx.clip();
-      ctx.fillStyle = base; ctx.fillRect(0, 0, L, w);
-      var r = rng(parseInt(f.code, 10) + si * 31), n = Math.max(8, Math.round(w / 1.4));
-      ctx.strokeStyle = grain;
-      for (var i = 0; i < n; i++) {
-        var y0 = r() * w, amp = r() * w * .06, fr = 1 + r() * 4, ph = r() * 6;
-        ctx.globalAlpha = .12 + r() * .25; ctx.lineWidth = Math.max(.5, w / 90) * (.5 + r() * 1.6); ctx.beginPath();
-        for (var k = 0; k <= 40; k++) { var x = L * k / 40, y = y0 + Math.sin(k / 40 * fr * Math.PI * 2 + ph) * amp; k ? ctx.lineTo(x, y) : ctx.moveTo(x, y); }
+  function rgba(hex, a) { var n = parseInt(hex.slice(1), 16); return 'rgba(' + (n >> 16 & 255) + ',' + (n >> 8 & 255) + ',' + (n & 255) + ',' + a + ')'; }
+  function paintSide(ctx, L, w, f, r) {
+    var base = f.color || '#8B6B4A', acc = f.accent || shade(base, -.4), i, x, y;
+    ctx.fillStyle = base; ctx.fillRect(0, 0, L, w);
+    /* surface */
+    if (f.finish === 'metal') {
+      for (i = 0; i < Math.max(14, w * 1.2); i++) { ctx.fillStyle = r() < .5 ? 'rgba(255,255,255,.07)' : 'rgba(0,0,0,.07)'; ctx.fillRect(0, r() * w, L, Math.max(.4, w / 120)); }
+    } else if (f.finish === 'mermer') {
+      for (i = 0; i < L / (w * .18); i++) {
+        ctx.save(); ctx.translate(r() * L, r() * w); ctx.rotate((r() - .5) * .5);
+        ctx.fillStyle = r() < .55 ? rgba(acc, .22 + r() * .25) : 'rgba(255,248,225,' + (.2 + r() * .3) + ')';
+        ctx.beginPath(); ctx.ellipse(0, 0, w * (.18 + r() * .6), w * (.025 + r() * .08), 0, 0, Math.PI * 2); ctx.fill(); ctx.restore();
+      }
+    } else if (f.finish === 'patina') {
+      for (i = 0; i < Math.min(900, L / (w * .04)); i++) {
+        ctx.fillStyle = rgba(acc, .2 + r() * .45); ctx.beginPath();
+        ctx.ellipse(r() * L, r() * w, w * (.02 + r() * .08), w * (.015 + r() * .04), r() * 3, 0, Math.PI * 2); ctx.fill();
+      }
+    } else {
+      var grain = shade(base, -.5); ctx.strokeStyle = grain;
+      for (i = 0; i < Math.max(8, w / 1.4); i++) {
+        var y0 = r() * w, amp = r() * w * .05, fr = 1 + r() * 4, ph = r() * 6;
+        ctx.globalAlpha = (f.finish === 'lak' ? .05 : .1) + r() * .15; ctx.lineWidth = Math.max(.5, w / 90) * (.5 + r() * 1.6); ctx.beginPath();
+        for (var k = 0; k <= 40; k++) { x = L * k / 40; y = y0 + Math.sin(k / 40 * fr * Math.PI * 2 + ph) * amp; k ? ctx.lineTo(x, y) : ctx.moveTo(x, y); }
         ctx.stroke();
       }
       ctx.globalAlpha = 1;
-      var gr = ctx.createLinearGradient(0, 0, 0, w);
-      prof.forEach(function (p) { gr.addColorStop(p[0], p[1] > 0 ? 'rgba(255,255,255,' + p[1] + ')' : 'rgba(0,0,0,' + (-p[1]) + ')'); });
-      ctx.fillStyle = gr; ctx.fillRect(0, 0, L, w);
+    }
+    /* pattern */
+    if (f.pattern === 'burma') {
+      var y1 = w * .14, y2 = w * .86, h = y2 - y1, p = h * 1.05;
+      for (x = -h; x < L + h; x += p) {
+        ctx.fillStyle = rgba(acc, .8); ctx.beginPath();
+        ctx.moveTo(x, y1); ctx.lineTo(x + p * .42, y1); ctx.lineTo(x + p * .42 + h * .55, y2); ctx.lineTo(x + h * .55, y2); ctx.closePath(); ctx.fill();
+        ctx.strokeStyle = 'rgba(255,245,215,.45)'; ctx.lineWidth = Math.max(.5, w / 60);
+        ctx.beginPath(); ctx.moveTo(x + p * .42, y1); ctx.lineTo(x + p * .42 + h * .55, y2); ctx.stroke();
+      }
+    } else if (f.pattern === 'ornament') {
+      var b1 = w * .3, b2 = w * .76, bh = b2 - b1, per = bh * 1.35, cy = (b1 + b2) / 2;
+      ctx.fillStyle = 'rgba(0,0,0,.18)'; ctx.fillRect(0, b1, L, bh);
+      for (x = 0; x < L + per; x += per) {
+        [['rgba(0,0,0,.4)', bh * .06], [rgba(acc, .85), 0]].forEach(function (pass) {
+          ctx.save(); ctx.translate(x + pass[1], cy + pass[1]); ctx.fillStyle = pass[0]; ctx.strokeStyle = pass[0];
+          ctx.lineWidth = Math.max(.6, bh * .11); ctx.beginPath(); ctx.arc(0, 0, bh * .3, Math.PI * .15, Math.PI * 1.75); ctx.stroke();
+          ctx.beginPath(); ctx.arc(per * .5, 0, bh * .3, Math.PI * 1.15, Math.PI * 2.75); ctx.stroke();
+          ctx.beginPath(); ctx.ellipse(per * .25, -bh * .22, bh * .2, bh * .09, -.5, 0, Math.PI * 2); ctx.fill();
+          ctx.beginPath(); ctx.ellipse(per * .25, bh * .22, bh * .2, bh * .09, .5, 0, Math.PI * 2); ctx.fill();
+          ctx.beginPath(); ctx.arc(0, 0, bh * .09, 0, Math.PI * 2); ctx.fill();
+          ctx.restore();
+        });
+      }
+    } else if (f.pattern === 'muncuq') {
+      var br = Math.max(.8, w * .04), by = f.lip === 'outer' ? w * .14 : w * .8;
+      for (x = br; x < L; x += br * 2.5) {
+        ctx.fillStyle = 'rgba(0,0,0,.35)'; ctx.beginPath(); ctx.arc(x + br * .25, by + br * .25, br, 0, Math.PI * 2); ctx.fill();
+        ctx.fillStyle = rgba(acc, .95); ctx.beginPath(); ctx.arc(x, by, br, 0, Math.PI * 2); ctx.fill();
+      }
+    }
+    /* edge band */
+    if (f.lip) {
+      var lc = f.lipColor || acc, l0 = f.lip === 'inner' ? w * .86 : 0, lh = w * (f.lip === 'inner' ? .14 : .08);
+      ctx.fillStyle = lc; ctx.fillRect(0, l0, L, lh);
+      var lg = ctx.createLinearGradient(0, l0, 0, l0 + lh);
+      lg.addColorStop(0, 'rgba(0,0,0,.3)'); lg.addColorStop(.35, 'rgba(255,245,215,.4)'); lg.addColorStop(1, 'rgba(0,0,0,.35)');
+      ctx.fillStyle = lg; ctx.fillRect(0, l0, L, lh);
+    }
+    /* relief and light */
+    var gr = ctx.createLinearGradient(0, 0, 0, w);
+    (PROFILES[f.profile] || PROFILES.flat).forEach(function (p) { gr.addColorStop(p[0], p[1] > 0 ? 'rgba(255,255,255,' + p[1] * (f.finish === 'metal' ? 1.2 : 1) + ')' : 'rgba(0,0,0,' + (-p[1]) + ')'); });
+    ctx.fillStyle = gr; ctx.fillRect(0, 0, L, w);
+    if (f.finish === 'metal' || f.finish === 'lak') {
+      var sh = ctx.createLinearGradient(0, 0, L, 0), k2 = f.finish === 'metal' ? .2 : .1;
+      sh.addColorStop(0, 'rgba(255,255,255,0)'); sh.addColorStop(.3, 'rgba(255,250,230,' + k2 + ')'); sh.addColorStop(.5, 'rgba(255,255,255,0)');
+      sh.addColorStop(.78, 'rgba(255,250,230,' + k2 * .8 + ')'); sh.addColorStop(1, 'rgba(255,255,255,0)');
+      ctx.fillStyle = sh; ctx.fillRect(0, 0, L, w);
+    }
+  }
+  function drawFrame(ctx, ox, oy, oW, oH, w, f) {
+    var sides = [[ox, oy, 0, oW, .1], [ox + oW, oy, Math.PI / 2, oH, -.05], [ox + oW, oy + oH, Math.PI, oW, -.15], [ox, oy + oH, -Math.PI / 2, oH, .04]];
+    sides.forEach(function (s, si) {
+      var L = s[3]; ctx.save(); ctx.translate(s[0], s[1]); ctx.rotate(s[2]);
+      ctx.beginPath(); ctx.moveTo(0, 0); ctx.lineTo(L, 0); ctx.lineTo(L - w, w); ctx.lineTo(w, w); ctx.closePath(); ctx.clip();
+      paintSide(ctx, L, w, f, rng(parseInt(f.code, 10) + si * 31));
       ctx.fillStyle = s[4] > 0 ? 'rgba(255,255,255,' + s[4] + ')' : 'rgba(0,0,0,' + (-s[4]) + ')'; ctx.fillRect(0, 0, L, w);
       ctx.restore();
     });
@@ -130,14 +196,18 @@
     var r = compose(ctx, cw, ch, st.frame, st.mat, st.wall, true), f = st.frame;
     facts.innerHTML = '<span>' + T.art + ': <b>' + cm(art.W) + ' × ' + cm(art.H) + ' ' + T.unit + '</b></span>' +
       '<span>' + T.framed + ': <b>' + cm(r.oW) + ' × ' + cm(r.oH) + ' ' + T.unit + '</b></span>' +
-      (f ? '<span>' + T.code + ' <b>' + f.code + '</b> · ' + T.profile + ' <b>' + f.w + ' × ' + f.d + ' mm</b></span>' : '<span><b>' + T.none + '</b></span>');
+      (f ? '<span><b>' + nameOf(f) + '</b> · ' + T.code + ' <b>' + f.code + '</b> · ' + T.profile + ' <b>' + f.w + ' × ' + f.d + ' mm</b></span>' : '<span><b>' + T.none + '</b></span>');
   }
   function thumb(cv, f) {
-    var c = cv.getContext('2d'); compose(c, cv.width, cv.height, f, false, '#E6DFD2', false);
+    var c = cv.getContext('2d'), W = cv.width, H = cv.height, fw = 22 + f.w / 138 * 46, o = 18;
+    c.fillStyle = '#E6DFD2'; c.fillRect(0, 0, W, H);
+    c.save(); c.shadowColor = 'rgba(0,0,0,.35)'; c.shadowBlur = 10; c.shadowOffsetY = 4; c.fillStyle = '#000'; c.fillRect(o, o, W * 2, H * 2); c.restore();
+    drawArt(c, o + fw, o + fw, W * 2, H * 2 * art.H / art.W); innerShadow(c, o + fw, o + fw, W, H, fw * .18);
+    drawFrame(c, o, o, W * 2.4, H * 2.4, fw, f);
   }
   function card(f) {
     var b = document.createElement('button'); b.type = 'button'; b.className = 'fr-card'; b.setAttribute('aria-pressed', String(f === st.frame));
-    if (f) { b.innerHTML = '<canvas width="200" height="200"></canvas><b>' + T.code + ' ' + f.code + '</b><small>' + f.w + ' × ' + f.d + ' mm</small>'; }
+    if (f) { b.innerHTML = '<canvas width="200" height="160"></canvas><b>' + nameOf(f) + '</b><small>' + T.code + ' ' + f.code + ' · ' + f.w + '×' + f.d + ' mm</small>'; }
     else { b.innerHTML = '<div class="fr-none">' + T.noneSub + '</div><b>' + T.none + '</b><small>—</small>'; }
     b.addEventListener('click', function () { st.frame = f; grid.querySelectorAll('.fr-card').forEach(function (c) { c.setAttribute('aria-pressed', String(c === b)); }); render(); });
     b._f = f; return b;
